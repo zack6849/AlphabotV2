@@ -27,7 +27,8 @@ public class Part extends Command
     {
         PircBotX bot = event.getBot();
         if (config.isAdmin(event.getUser().getNick(), event.getUser().getHostmask()))
-        {s
+        {
+            //one moar test commit pls
             bot.partChannel(event.getChannel());
         }else{
             bot.sendMessage(event.getChannel(), config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
