@@ -28,9 +28,7 @@ public class Part extends Command
         PircBotX bot = event.getBot();
         if (config.isAdmin(event.getUser().getNick(), event.getUser().getHostmask()))
         {
-            bot.setAutoReconnect(false);
-            bot.quitServer("Bye bye!");
-            bot.shutdown();
+            bot.partChannel(event.getChannel());
         }else{
             bot.sendMessage(event.getChannel(), config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
         }
