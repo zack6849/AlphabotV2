@@ -423,16 +423,17 @@ public class Config
         String hostname;
         for (String host : admins)
         {
-            System.out.println("Checking " + host + " for admin!");
             nick = host.split("\\|")[0];
             hostname = host.split("\\|")[1];
-            Pattern p = Pattern.compile(hostname.replaceAll("\\*", ".+"));
+            Pattern p = Pattern.compile(hostname.replaceAll("\\.", "\\\\.").replaceAll("\\*", ".*"));
             Matcher m = p.matcher(hostmask);
             if (m.find())
-            {
+            {              
                 hostmatch = true;
+            }else{
+                System.out.println("No match!");
             }
-            p = Pattern.compile(nick.replaceAll("\\*", ".+"));
+            p = Pattern.compile(nick.replaceAll("\\*", ".*"));
             m = p.matcher(nick);
             if(m.find()){
                 nickmatch = true;
