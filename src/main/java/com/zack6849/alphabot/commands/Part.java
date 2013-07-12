@@ -28,7 +28,6 @@ public class Part extends Command
         PircBotX bot = event.getBot();
         if (config.isAdmin(event.getUser().getNick(), event.getUser().getHostmask()))
         {
-            //k, i r dun.
             bot.partChannel(event.getChannel());
         }else{
             bot.sendMessage(event.getChannel(), config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
@@ -37,19 +36,19 @@ public class Part extends Command
     @Override
     public String getDescription()
     {
-        return "Re";
+        return "Parts the curent channel";
     }
 
     @Override
     public String getSyntax()
     {
-        return config.getTrigger() + "Kill";
+        return config.getTrigger() + "part or " + config.getTrigger() + "part <channel>";
     }
 
     @Override
     public String getName()
     {
-        return "";
+        return "Part";
     }
 
     @Override
