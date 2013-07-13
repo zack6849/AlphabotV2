@@ -32,12 +32,12 @@ public class Help extends Command
                 Command cmd = (Command) Command.getOrCreateNewInstance(c.getSimpleName());
                 if (!cmd.isSecret())
                 {
-                    event.getBot().sendNotice(event.getUser(), String.format("%s - \t%s ", cmd.getName(), cmd.getDescription()));
+                    event.getBot().sendNotice(event.getUser(), String.format("%s - \t%s ", cmd.getName().replaceAll("%CLASSNAME%", c.getSimpleName().replaceAll("\\.class", "")), cmd.getDescription().replaceAll("%CLASSNAME%", c.getSimpleName().replaceAll("\\.class", ""))));
                 } else
                 {
                     if (config.isAdmin(event.getUser().getNick(), event.getUser().getHostmask()))
                     {
-                        event.getBot().sendNotice(event.getUser(), "TOP SEKRIT! " + String.format("%s - \t%s ", cmd.getName(), cmd.getDescription()));
+                        event.getBot().sendNotice(event.getUser(), "TOP SEKRIT! " + String.format("%s - \t%s ", cmd.getName().replaceAll("%CLASSNAME%", c.getSimpleName().replaceAll("\\.class", "")), cmd.getDescription().replaceAll("%CLASSNAME%", c.getSimpleName().replaceAll("\\.class", ""))));
                     }
                 }
             }
@@ -46,9 +46,9 @@ public class Help extends Command
         {
             String classname = Character.toUpperCase(event.getMessage().split(" ")[1].charAt(0)) + event.getMessage().split(" ")[1].substring(1).toLowerCase();
             Command command = (Command) Command.getOrCreateNewInstance(classname);
-            event.getBot().sendNotice(event.getUser(), "Help for command " + command.getName());
-            event.getBot().sendNotice(event.getUser(), "Description: " + command.getDescription());
-            event.getBot().sendNotice(event.getUser(), "Usage: " + command.getSyntax());
+            event.getBot().sendNotice(event.getUser(), "Help for command " + command.getName().replaceAll("%CLASSNAME%", classname));
+            event.getBot().sendNotice(event.getUser(), "Description: " + command.getDescription().replaceAll("%CLASSNAME%",classname ));
+            event.getBot().sendNotice(event.getUser(), "Usage: " + command.getSyntax().replaceAll("%CLASSNAME%", classname));
         }
     }
 

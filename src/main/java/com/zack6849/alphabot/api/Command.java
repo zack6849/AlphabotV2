@@ -38,7 +38,7 @@ public abstract class Command
      */
     public String getDescription()
     {
-        return "No description available";
+        return "No description available for %CLASSNAME%";
     }
 
     /**
@@ -46,7 +46,7 @@ public abstract class Command
      */
     public String getSyntax()
     {
-        return "No syntax information available";
+        return "No syntax information available for class %CLASSNAME%";
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class Command
      */
     public String getName()
     {
-        return "No command name set!";
+        return "No command name set for %CLASSNAME%";
     }
 
     /**
