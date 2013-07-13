@@ -38,7 +38,7 @@ public abstract class Command
      */
     public String getDescription()
     {
-        return null;
+        return "No description available";
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class Command
      */
     public String getName()
     {
-        return "No command name set.";
+        return "No command name set!";
     }
 
     /**

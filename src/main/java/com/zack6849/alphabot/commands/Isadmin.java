@@ -36,19 +36,19 @@ public class Isadmin extends Command
     @Override
     public String getDescription()
     {
-        return "Disconnects the bot from the current server";
+        return "Checks if a user is an administrator";
     }
 
     @Override
     public String getSyntax()
     {
-        return config.getTrigger() + "Kill";
+        return config.getTrigger() + "isadmin";
     }
 
     @Override
     public String getName()
     {
-        return "Kill";
+        return "IsAdmin";
     }
 
     @Override
