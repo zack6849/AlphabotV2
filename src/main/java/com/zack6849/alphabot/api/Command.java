@@ -2,12 +2,15 @@ package com.zack6849.alphabot.api;
 
 import java.util.HashMap;
 import static com.zack6849.alphabot.api.Command.commands;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.pircbotx.hooks.events.MessageEvent;
 
 public abstract class Command
 {
+
     private Config config;
     public static HashMap<String, Object> commands = new HashMap<>();
 
@@ -31,7 +34,6 @@ public abstract class Command
     {
         this.config = conf;
     }
-    
 
     /**
      * @return A description of what the command does
@@ -85,5 +87,4 @@ public abstract class Command
         }
         return null;
     }
-
 }
