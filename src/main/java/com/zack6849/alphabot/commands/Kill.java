@@ -6,6 +6,7 @@ package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.Config;
+import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -17,12 +18,20 @@ public class Kill extends Command
 {
 
     private Config config;
-    
+    private PermissionManager manager;
+
     @Override
     public void setConfig(Config conf)
     {
         this.config = conf;
     }
+
+    @Override
+    public void setManager(PermissionManager man)
+    {
+        this.manager = man;
+    }
+
     @Override
     public void run(MessageEvent event)
     {
@@ -32,10 +41,12 @@ public class Kill extends Command
             bot.setAutoReconnect(false);
             bot.quitServer("Bye bye!");
             bot.shutdown();
-        }else{
+        } else
+        {
             bot.sendMessage(event.getChannel(), config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
         }
     }
+
     @Override
     public String getDescription()
     {

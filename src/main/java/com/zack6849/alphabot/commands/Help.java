@@ -6,6 +6,7 @@ package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.Config;
+import com.zack6849.alphabot.api.PermissionManager;
 import java.util.Set;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.reflections.Reflections;
@@ -18,7 +19,7 @@ public class Help extends Command
 {
 
     private Config config;
-
+    private PermissionManager manager;
     @Override
     public void run(MessageEvent event)
     {
@@ -56,6 +57,10 @@ public class Help extends Command
     public void setConfig(Config conf)
     {
         this.config = conf;
+    }
+    @Override
+    public void setManager(PermissionManager man){
+        this.manager = man;
     }
 
     @Override

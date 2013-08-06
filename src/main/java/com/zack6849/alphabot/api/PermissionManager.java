@@ -79,6 +79,7 @@ public class PermissionManager
         if(config.isAdmin(user.getNick(), user.getHostmask())){
             return true;
         }
+        //huehuheue copypasta from Config.java
         for (String host : properties.stringPropertyNames())
         {
             nick = host.split("\\@")[0];
