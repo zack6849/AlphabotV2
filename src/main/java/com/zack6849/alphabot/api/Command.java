@@ -12,6 +12,7 @@ public abstract class Command
 {
 
     private Config config;
+    private PermissionManager manager;
     public static HashMap<String, Object> commands = new HashMap<>();
 
     /**
@@ -33,6 +34,11 @@ public abstract class Command
     public void setConfig(Config conf)
     {
         this.config = conf;
+    }
+
+    public void setManager(PermissionManager manager)
+    {
+        this.manager = manager;
     }
 
     /**

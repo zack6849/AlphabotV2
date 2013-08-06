@@ -1,6 +1,7 @@
 package com.zack6849.alphabot;
 
 import com.zack6849.alphabot.api.Config;
+import com.zack6849.alphabot.api.PermissionManager;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
@@ -20,11 +21,13 @@ public class Main
         {
             PircBotX bot = new PircBotX();
             Config config = new Config();
+            PermissionManager manager = new PermissionManager(config);
             config.load();
+            manager.load();
             bot.setName(config.getBotNickname());
             bot.setLogin(config.getBotIdent());
-            bot.getListenerManager().addListener(new com.zack6849.alphabot.listeners.MessageEvent(config));
-            bot.getListenerManager().addListener(new com.zack6849.alphabot.listeners.InviteEvent(config));
+            bot.getListenerManager().addListener(new com.zack6849.alphabot.listeners.MessageEvent(config, manager));
+            bot.getListenerManager().addListener(new com.zack6849.alphabot.listeners.InviteEvent(config, manager));
             bot.setVerbose(config.isDebug());
             bot.setAutoReconnectChannels(config.isAutoRejoinChannel());
             bot.setAutoReconnect(config.isAutoReconnectServer());
