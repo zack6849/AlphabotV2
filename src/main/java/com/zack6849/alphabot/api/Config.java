@@ -398,6 +398,7 @@ public class Config
     {
         this.loggedChannels = loggedChannels;
     }
+
     /**
      * @return the permissionDenied
      */
@@ -428,12 +429,13 @@ public class Config
             Pattern p = Pattern.compile(hostname.replaceAll("\\.", "\\\\.").replaceAll("\\*", ".*"));
             Matcher m = p.matcher(hostmask);
             if (m.find())
-            {              
+            {
                 hostmatch = true;
             }
             p = Pattern.compile(nick.replaceAll("\\*", ".*"));
             m = p.matcher(nick);
-            if(m.find()){
+            if (m.find())
+            {
                 nickmatch = true;
             }
         }

@@ -5,8 +5,10 @@
 package com.zack6849.alphabot.listeners;
 
 import com.zack6849.alphabot.api.Command;
+import com.zack6849.alphabot.api.CommandRegistry;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
+import com.zack6849.alphabot.api.Utils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -39,17 +41,25 @@ public class MessageEvent extends ListenerAdapter
                 String permission = "command." + event.getMessage().split(" ")[0].toLowerCase().substring(1);
                 if (manager.hasPermission(permission, event.getUser()))
                 {
-                    Command command = (Command) Command.getOrCreateNewInstance(classname);
-                    command.setConfig(config);
-                    command.setManager(manager);
-                    command.run(event);
-                }else{
-                    event.getBot().sendNotice(event.getUser(), config.getPermissionDenied().replaceAll("%USERNAME%",event.getUser().getNick()));
+                    Command command = CommandRegistry.getCommand(classname);
+                    System.out.println(command != null);
+                    command.execute(event);
+
+                } else
+                {
+                    event.getBot().sendNotice(event.getUser(), config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
                 }
 
             } catch (Exception e)
             {
-                //Logger.getLogger(MessageEvent.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(MessageEvent.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        for (String word : event.getMessage().split(" "))
+        {
+            if (Utils.isUrl(word))
+            {
+                event.getBot().sendMessage(event.getChannel(), event.getUser().getNick() + "'s URL: " + Utils.getTitle(word));
             }
         }
     }

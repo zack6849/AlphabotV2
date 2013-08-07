@@ -5,8 +5,6 @@
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
-import com.zack6849.alphabot.api.Config;
-import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.events.MessageEvent;
 
 /**
@@ -15,31 +13,14 @@ import org.pircbotx.hooks.events.MessageEvent;
  */
 public class Test extends Command
 {
-
-    private Config config;
-    private PermissionManager manager;
-
-    @Override
-    public void setConfig(Config conf)
-    {
-        this.config = conf;
+    public Test(){
+        super("Test", "command.test");
     }
 
     @Override
-    public void setManager(PermissionManager man)
+    public void execute(MessageEvent event)
     {
-        this.manager = man;
+        event.getBot().sendMessage(event.getChannel(), "Test!");
     }
-
-    @Override
-    public void run(MessageEvent event)
-    {
-        
-    }
-
-    @Override
-    public boolean isSecret()
-    {
-        return false;
-    }
+    
 }

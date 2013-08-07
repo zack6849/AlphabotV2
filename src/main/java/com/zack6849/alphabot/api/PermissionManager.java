@@ -76,7 +76,8 @@ public class PermissionManager
         boolean nickmatch = false;
         String nick;
         String hostname;
-        if(config.isAdmin(user.getNick(), user.getHostmask())){
+        if (config.isAdmin(user.getNick(), user.getHostmask()))
+        {
             return true;
         }
         //huehuheue copypasta from Config.java
