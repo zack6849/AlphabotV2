@@ -88,7 +88,8 @@ public abstract class Command
                 return commands.get(classname);
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex)
             {
-                Logger.getLogger(Command.class.getName()).log(Level.SEVERE, null, ex);
+                /*no need to catch the exception here, it just means the commmand doesnt exist
+                Logger.getLogger(Command.class.getName()).log(Level.SEVERE, null, ex);*/
             }
         }
         return null;
