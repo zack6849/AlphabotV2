@@ -42,7 +42,7 @@ public class MessageEvent extends ListenerAdapter
                 if (manager.hasPermission(permission, event.getUser()))
                 {
                     Command command = CommandRegistry.getCommand(classname);
-                    System.out.println(command != null);
+                    System.out.println("Executing command " + command.getName());
                     command.execute(event);
 
                 } else

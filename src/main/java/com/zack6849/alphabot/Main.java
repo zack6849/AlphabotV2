@@ -3,7 +3,9 @@ package com.zack6849.alphabot;
 import com.zack6849.alphabot.api.CommandRegistry;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
+import com.zack6849.alphabot.commands.Kill;
 import com.zack6849.alphabot.commands.Test;
+import com.zack6849.alphabot.commands.Uptime;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
@@ -26,6 +28,8 @@ public class Main
             PircBotX bot = new PircBotX();
             Config config = new Config();
             CommandRegistry.register(new Test());
+            CommandRegistry.register(new Uptime());
+            CommandRegistry.register(new Kill());
             PermissionManager manager = new PermissionManager(config);
             config.load();
             manager.load();
