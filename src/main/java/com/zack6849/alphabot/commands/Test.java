@@ -5,6 +5,7 @@
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
+import com.zack6849.alphabot.api.Config;
 import org.pircbotx.hooks.events.MessageEvent;
 
 /**
@@ -13,7 +14,11 @@ import org.pircbotx.hooks.events.MessageEvent;
  */
 public class Test extends Command
 {
-    public Test(){
+
+    private Config config;
+
+    public Test()
+    {
         super("Test", "command.test");
     }
 
@@ -22,5 +27,10 @@ public class Test extends Command
     {
         event.getBot().sendMessage(event.getChannel(), "Test!");
     }
-    
+
+    @Override
+    public void setConfig(Config config)
+    {
+        this.config = config;
+    }
 }

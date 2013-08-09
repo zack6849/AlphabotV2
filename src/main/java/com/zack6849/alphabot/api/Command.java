@@ -4,21 +4,17 @@ import org.pircbotx.hooks.events.MessageEvent;
 
 public abstract class Command
 {
-    //shamelessley stolen from http://github.com/TheReverend403/FoxBot/
     private final String name;
     private final String permission;
-    private final String[] aliases;
-
     public Command(String name)
     {
         this(name, null);
     }
 
-    public Command(String name, String permission, String... aliases)
+    public Command(String name, String permission)
     {
         this.name = name;
         this.permission = permission;
-        this.aliases = aliases;
     }
 
     public String getName()
@@ -31,10 +27,7 @@ public abstract class Command
         return permission;
     }
 
-    public String[] getAliases()
-    {
-        return aliases;
-    }
-
     public abstract void execute(MessageEvent event);
+    public abstract void setConfig(Config config);
+    
 }

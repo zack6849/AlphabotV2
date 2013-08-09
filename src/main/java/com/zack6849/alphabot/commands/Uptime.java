@@ -6,7 +6,7 @@ package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.Main;
 import com.zack6849.alphabot.api.Command;
-import java.util.concurrent.TimeUnit;
+import com.zack6849.alphabot.api.Config;
 import org.pircbotx.hooks.events.MessageEvent;
 
 /**
@@ -15,6 +15,8 @@ import org.pircbotx.hooks.events.MessageEvent;
  */
 public class Uptime extends Command
 {
+
+    private Config config;
 
     public Uptime()
     {
@@ -31,5 +33,11 @@ public class Uptime extends Command
         int days = (int) (time / 86400000);
         String uptime = String.format("%d Days %d Hours %d Minutes and %d seconds", days, hours, minutes, seconds);
         event.getBot().sendMessage(event.getChannel(), "Current bot uptime: " + uptime);
+    }
+
+    @Override
+    public void setConfig(Config config)
+    {
+        this.config = config;
     }
 }

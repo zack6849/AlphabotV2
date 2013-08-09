@@ -5,6 +5,7 @@
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
+import com.zack6849.alphabot.api.Config;
 import org.pircbotx.hooks.events.MessageEvent;
 
 /**
@@ -13,8 +14,12 @@ import org.pircbotx.hooks.events.MessageEvent;
  */
 public class Kill extends Command
 {
-    public Kill(){
-        super("Kill" , "command.kill");
+
+    private Config config;
+
+    public Kill()
+    {
+        super("Kill", "command.kill");
     }
 
     @Override
@@ -22,5 +27,10 @@ public class Kill extends Command
     {
         event.getBot().shutdown(true);
     }
-    
+
+    @Override
+    public void setConfig(Config config)
+    {
+        this.config = config;
+    }
 }

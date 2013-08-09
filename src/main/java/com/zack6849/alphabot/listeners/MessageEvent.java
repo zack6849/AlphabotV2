@@ -43,6 +43,7 @@ public class MessageEvent extends ListenerAdapter
                 {
                     Command command = CommandRegistry.getCommand(classname);
                     System.out.println("Executing command " + command.getName());
+                    command.setConfig(config);
                     command.execute(event);
 
                 } else
