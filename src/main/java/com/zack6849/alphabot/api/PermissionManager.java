@@ -28,11 +28,11 @@ public class PermissionManager
 {
 
     private Properties properties;
-    private Config config;
+    private Config configs;
 
     public PermissionManager(Config conf)
     {
-        this.config = conf;
+        this.configs = conf;
     }
 
     public void load()
@@ -76,7 +76,7 @@ public class PermissionManager
         boolean nickmatch = false;
         String nick;
         String hostname;
-        if (config.isAdmin(user.getNick(), user.getHostmask()))
+        if (configs.isAdmin(user.getNick(), user.getHostmask()))
         {
             return true;
         }

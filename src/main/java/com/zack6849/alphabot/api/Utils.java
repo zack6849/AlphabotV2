@@ -52,14 +52,14 @@ public class Utils
             Future<Response> future = client.prepareGet(link).setFollowRedirects(true).execute();
             Response response = future.get();
             String output = response.getResponseBody("UTF-8");
-            Pattern p = Pattern.compile("<title>.+</title>");
+            Pattern p = Pattern.compile("<title>(.+)</title>", Pattern.DOTALL);
             Matcher m;
             for (String line : output.split("\n"))
             {
                 m = p.matcher(line);
                 if (m.find())
                 {
-                    return StringEscapeUtils.unescapeHtml(line.split("<title>")[1].split("</title>")[0]);
+                    return StringEscapeUtils.unescapeHtml(m.group().split("<title>")[1].split("</title>")[0]);
                 }
             }
             return "No title found.";

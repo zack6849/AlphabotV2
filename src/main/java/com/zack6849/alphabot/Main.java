@@ -8,6 +8,7 @@ import com.zack6849.alphabot.commands.Test;
 import com.zack6849.alphabot.commands.Uptime;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.pircbotx.PircBotX;
@@ -25,7 +26,7 @@ public class Main
         try
         {
             startup = System.currentTimeMillis();
-            PircBotX bot = new PircBotX();
+            final PircBotX bot = new PircBotX();
             Config config = new Config();
             CommandRegistry.register(new Test());
             CommandRegistry.register(new Uptime());
@@ -50,6 +51,18 @@ public class Main
             for(String channel : config.getChannels()){
                 bot.joinChannel(channel);
             }
+            new Thread(new Runnable() {
+
+                @Override
+                public void run()
+                {
+                    Scanner in = new Scanner(System.in);
+                    String line = "";
+                    while((line = in.nextLine())!= null){
+                        bot.sendRawLineNow(line);
+                    }
+                }
+            }).start();
         } catch (IOException | IrcException ex)
         {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
