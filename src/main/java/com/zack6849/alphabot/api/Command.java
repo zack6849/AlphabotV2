@@ -5,16 +5,9 @@ import org.pircbotx.hooks.events.MessageEvent;
 public abstract class Command
 {
     private final String name;
-    private final String permission;
     public Command(String name)
     {
-        this(name, null);
-    }
-
-    public Command(String name, String permission)
-    {
         this.name = name;
-        this.permission = permission;
     }
 
     public String getName()
@@ -22,12 +15,8 @@ public abstract class Command
         return name;
     }
 
-    public String getPermission()
-    {
-        return permission;
-    }
-
     public abstract void execute(MessageEvent event);
     public abstract void setConfig(Config config);
+    public abstract void setManager(PermissionManager manager);
     
 }
