@@ -38,11 +38,10 @@ public class MessageEvent extends ListenerAdapter
             try
             {
                 String classname = Character.toUpperCase(event.getMessage().split(" ")[0].charAt(1)) + event.getMessage().split(" ")[0].substring(2).toLowerCase();
-                String permission = "command." + event.getMessage().split(" ")[0].toLowerCase().substring(1);
+                String permission = "command." + classname.toLowerCase();
                 if (manager.hasPermission(permission, event.getUser()))
                 {
                     Command command = CommandRegistry.getCommand(classname);
-                    System.out.println("Executing command " + command.getName());
                     command.setConfig(config);
                     command.execute(event);
 

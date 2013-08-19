@@ -100,11 +100,7 @@ public class PermissionManager
             if (hostmatch && nickmatch)
             {
                 List<String> permissions = Arrays.asList(properties.getProperty(host).split(" "));
-                for (String s : permissions)
-                {
-                    System.out.println(s);
-                }
-                return permissions.contains(permission) || permissions.contains("command.*");
+                return permissions.contains(permission) || permissions.contains("permissions.*");
             }
         }
         return false;

@@ -1,5 +1,6 @@
 package com.zack6849.alphabot;
 
+import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.CommandRegistry;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
@@ -9,10 +10,12 @@ import com.zack6849.alphabot.commands.Uptime;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
+import org.reflections.Reflections;
 
 /**
  * Hello world!
@@ -28,12 +31,18 @@ public class Main
             startup = System.currentTimeMillis();
             final PircBotX bot = new PircBotX();
             Config config = new Config();
-            CommandRegistry.register(new Test());
-            CommandRegistry.register(new Uptime());
-            CommandRegistry.register(new Kill());
             PermissionManager manager = new PermissionManager(config);
+            System.out.println("Loading and registering commands");
             config.load();
             manager.load();
+            Reflections reflections = new Reflections("com.zack6849.alphabot.commands");
+            Set<Class<? extends Command>> subTypes = reflections.getSubTypesOf(Command.class);
+            for (Class c : subTypes)
+            {
+                Command cmd = (Command) CommandRegistry.getCommand(c.getSimpleName());
+                System.out.println("Registered command " + cmd.getName() + " as key " + c.getSimpleName());
+                CommandRegistry.register(cmd);
+            }
             bot.setName(config.getBotNickname());
             bot.setLogin(config.getBotIdent());
             bot.getListenerManager().addListener(new com.zack6849.alphabot.listeners.MessageEvent(config, manager));
@@ -46,6 +55,7 @@ public class Main
             bot.setVersion(config.getCtcpVersion());
             bot.setFinger(config.getCtcpFinger());
             bot.setEncoding(Charset.forName("UTF-8"));
+            System.out.println("Done, connecting to irc!");
             bot.connect(config.getServerHostame(), Integer.parseInt(config.getServerPort()), config.getServerPassword());
             bot.sendMessage("NickServ", "identify " + config.getBotUsername() + " " + config.getBotPassword());
             for(String channel : config.getChannels()){
