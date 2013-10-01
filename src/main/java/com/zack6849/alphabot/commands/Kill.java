@@ -34,6 +34,6 @@ public class Kill extends Command {
 
     @Override
     public void setManager(PermissionManager manager) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.manager = manager;
     }
 }

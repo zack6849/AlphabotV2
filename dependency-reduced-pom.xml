@@ -80,13 +80,6 @@
       <groupId>bsh</groupId>
       <artifactId>bsh</artifactId>
       <version>2.0b4</version>
-      <type>pom</type>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.beanshell</groupId>
-      <artifactId>bsh</artifactId>
-      <version>2.0b4</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
