@@ -4,16 +4,17 @@
  */
 package com.zack6849.alphabot.api;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.pircbotx.Colors;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.URL;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,5 +127,36 @@ public class Utils {
             returns = "sorry, we couldn't reach this server, make sure that the server is up and has query enabled.";
         }
         return returns;
+    }
+    public static String google(String s) {
+        try {
+            String temp = String.format("https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=%s", URLEncoder.encode(s));
+            URL u = new URL(temp);
+            URLConnection c = u.openConnection();
+            System.out.println("url = " + u);
+            c.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.57 Safari/537.17");
+            BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            String json = "";
+            String tmp = "";
+            while ((tmp = in.readLine()) != null) {
+                json += tmp + "\n";
+                //System.out.println(tmp);
+            }
+            in.close();
+            Gson gson = new Gson();
+            JsonElement jelement = new JsonParser().parse(json);
+            JsonObject output = jelement.getAsJsonObject();
+            output = output.getAsJsonObject("responseData").getAsJsonArray("results").get(0).getAsJsonObject();
+            String result = String.format("Google: %s | %s | (%s)", StringEscapeUtils.unescapeHtml(output.get("titleNoFormatting").toString().replaceAll("\"", "")), StringEscapeUtils.unescapeHtml(output.get("content").toString().replaceAll("\\s+", " ").replaceAll("\\<.*?>", "").replaceAll("\"", "")), output.get("url").toString().replaceAll("\"", ""));
+
+            if (result != null) {
+                return result;
+            } else {
+                return "No results found for query " + s;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
