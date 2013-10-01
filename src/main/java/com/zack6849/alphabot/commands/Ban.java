@@ -12,7 +12,6 @@ import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
 
 /**
- *
  * @author Zack
  */
 public class Ban extends Command {
@@ -20,6 +19,7 @@ public class Ban extends Command {
     public Ban() {
         super("Ban");
     }
+
     private Config config;
     private PermissionManager manager;
     //huehuehue le copypasta faec

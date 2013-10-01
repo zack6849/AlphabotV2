@@ -11,7 +11,6 @@ import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.events.MessageEvent;
 
 /**
- *
  * @author Zack
  */
 public class Uptime extends Command {

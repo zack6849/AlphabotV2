@@ -5,3 +5,6 @@ Alphabotv2.rar
 /build.xml
 /bin
 /manifest.mf
+#netbeans stuff.
+/.idea
+Alphabotv2.iml

@@ -10,7 +10,6 @@ import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.events.MessageEvent;
 
 /**
- *
  * @author Zack
  */
 public class Test extends Command {
@@ -36,5 +35,5 @@ public class Test extends Command {
     public void setManager(PermissionManager manager) {
         this.manager = manager;
     }
-    
+
 }

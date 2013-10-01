@@ -12,7 +12,6 @@ import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
 
 /**
- *
  * @author Zack
  */
 public class Kick extends Command {

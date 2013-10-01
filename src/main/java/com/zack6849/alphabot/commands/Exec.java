@@ -5,19 +5,13 @@
 package com.zack6849.alphabot.commands;
 
 import bsh.EvalError;
-import bsh.UtilEvalError;
-import com.zack6849.alphabot.api.Command;
-import com.zack6849.alphabot.api.CommandRegistry;
-import com.zack6849.alphabot.api.Config;
-import com.zack6849.alphabot.api.PermissionManager;
-import com.zack6849.alphabot.api.Utils;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.lang.StringUtils;
+import com.zack6849.alphabot.api.*;
 import org.pircbotx.hooks.events.MessageEvent;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * @author zack6849
  */
 public class Exec extends Command {
@@ -37,7 +31,7 @@ public class Exec extends Command {
             if (System.getProperty("os.name").toLowerCase().contains("linux")) {
                 interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = Runtime.getRuntime().exec(new java.lang.String[] {\"/bin/sh\", \"-c\", command}); BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
             } else {
-                interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = Runtime.getRuntime().exec(command}); BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
+                //interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = Runtime.getRuntime().exec(command}); BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
             }
         } catch (Exception ex) {
             Logger.getLogger(Exec.class.getName()).log(Level.SEVERE, null, ex);
