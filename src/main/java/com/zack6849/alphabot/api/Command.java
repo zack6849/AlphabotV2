@@ -70,10 +70,28 @@ public abstract class Command {
         return this.help;
     }
 
+
+    /**
+     * Execute the command
+     *
+     * @param event The MessageEvent to fire the command with
+     */
     public abstract void execute(MessageEvent event);
 
+    /**
+     * Set the config object to be used by the command
+     * Used to pass the config to the class.
+     *
+     * @param config the config object to pass
+     */
     public abstract void setConfig(Config config);
 
+    /**
+     * Set the PermissionManager object for the command
+     * Used to pass the command a permissions manager
+     *
+     * @param manager the permissionsmanager instance to pass to the class
+     */
     public abstract void setManager(PermissionManager manager);
 
 }

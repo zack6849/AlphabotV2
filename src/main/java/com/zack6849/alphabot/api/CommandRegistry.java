@@ -9,6 +9,9 @@ public class CommandRegistry {
     public static HashMap<String, Command> commands = new HashMap<>();
 
     public static void register(Command command) {
+        if (commands.containsKey(command.getName())) {
+            return;
+        }
         commands.put(command.getName().toLowerCase(), command);
     }
 

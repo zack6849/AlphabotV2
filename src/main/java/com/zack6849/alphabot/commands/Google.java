@@ -23,7 +23,6 @@ public class Google extends Command {
                 sb.append(args[i]).append(" ");
             }
             String google = sb.toString().trim();
-            event.getBot().sendMessage(event.getChannel(), google);
             event.getBot().sendMessage(event.getChannel(), Utils.google(google));
         }
     }

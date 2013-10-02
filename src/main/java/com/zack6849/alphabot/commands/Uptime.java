@@ -12,7 +12,7 @@ public class Uptime extends Command {
     private PermissionManager manager;
 
     public Uptime() {
-        super("Uptime");
+        super("Uptime", "Gets the bot's uptime", "Uptime");
     }
 
     @Override
