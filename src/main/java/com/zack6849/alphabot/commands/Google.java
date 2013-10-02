@@ -3,25 +3,28 @@ package com.zack6849.alphabot.commands;
 import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
-import org.pircbotx.Channel;
+import com.zack6849.alphabot.api.Utils;
 import org.pircbotx.hooks.events.MessageEvent;
 
-public class Join extends Command {
+public class Google extends Command {
+    public Google() {
+        super("Google", "Searches google for something.", "Google how to google");
+    }
 
     private Config config;
     private PermissionManager manager;
 
-    public Join() {
-        super("Join", "Tells the bot to join a channel", "join #channel");
-    }
-
     @Override
     public void execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
-        if (args.length == 2) {
-            Channel target = event.getBot().getChannel(args[1]);
-            event.getBot().sendRawLineNow("KNOCK " + target.getName() + " :Asked to join by " + event.getUser().getNick());
-            event.getBot().joinChannel(target.getName());
+        if (args.length >= 3) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 2; i < args.length; i++) {
+                sb.append(args[i]).append(" ");
+            }
+            String google = sb.toString().trim();
+            event.getBot().sendMessage(event.getChannel(), google);
+            event.getBot().sendMessage(event.getChannel(), Utils.google(google));
         }
     }
 
@@ -34,4 +37,5 @@ public class Join extends Command {
     public void setManager(PermissionManager manager) {
         this.manager = manager;
     }
+
 }

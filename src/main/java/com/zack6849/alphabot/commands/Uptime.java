@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.Main;
@@ -10,9 +6,6 @@ import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.events.MessageEvent;
 
-/**
- * @author Zack
- */
 public class Uptime extends Command {
 
     private Config config;

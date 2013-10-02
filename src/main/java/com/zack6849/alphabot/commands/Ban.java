@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
@@ -11,18 +7,14 @@ import org.pircbotx.Channel;
 import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
 
-/**
- * @author Zack
- */
 public class Ban extends Command {
 
     public Ban() {
-        super("Ban");
+        super("Ban", "Bans a user from a channel", "Ban <hostmask> (optional: reason) | Ban <#channel> <hostmask> (optional: reason)");
     }
 
     private Config config;
     private PermissionManager manager;
-    //huehuehue le copypasta faec
 
     @Override
     public void execute(MessageEvent event) {

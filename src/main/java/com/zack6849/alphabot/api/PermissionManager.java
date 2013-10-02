@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zack6849.alphabot.api;
 
 import com.zack6849.alphabot.Main;
@@ -16,9 +12,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author Zack
- */
 public class PermissionManager {
 
     private Properties properties;

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zack6849.alphabot.commands;
 
 import bsh.EvalError;
@@ -11,9 +7,6 @@ import org.pircbotx.hooks.events.MessageEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * @author zack6849
- */
 public class Exec extends Command {
 
     private static Config config;
@@ -39,7 +32,7 @@ public class Exec extends Command {
     }
 
     public Exec() {
-        super("Exec");
+        super("Exec", "Execute java code at runtime", "Exec <code> ex. exec bot.sendMessage(chan, \"Hello world!\");");
     }
 
     @Override

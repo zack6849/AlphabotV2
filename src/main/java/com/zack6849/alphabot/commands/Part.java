@@ -6,16 +6,9 @@ import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.Channel;
 import org.pircbotx.hooks.events.MessageEvent;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Zack
- * Date: 10/1/13
- * Time: 9:31 AM
- * To change this template use File | Settings | File Templates.
- */
 public class Part extends Command {
     public Part() {
-        super("Part");
+        super("Part", "Removes the bot from a channel", "part #channel");
     }
 
     private Config config;

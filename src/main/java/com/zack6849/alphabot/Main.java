@@ -15,9 +15,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Hello world!
- */
 public class Main {
     public static long startup = 0;
 

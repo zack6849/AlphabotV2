@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
@@ -11,16 +7,13 @@ import org.pircbotx.Channel;
 import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
 
-/**
- * @author Zack
- */
 public class Kick extends Command {
 
     private Config config;
     private PermissionManager manager;
 
     public Kick() {
-        super("Kick");
+        super("Kick", "Remove a user from a channel", "kick #channel user (reason) or kick user (reason)");
     }
 
     @Override
@@ -76,6 +69,7 @@ public class Kick extends Command {
                     }
                 }
             } else {
+                //!kick user reason
                 StringBuilder sb = new StringBuilder();
                 for (int i = 2; i < args.length; i++) {
                     sb.append(args[i]).append(" ");

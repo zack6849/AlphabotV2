@@ -3,26 +3,20 @@ package com.zack6849.alphabot.commands;
 import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
-import org.pircbotx.Channel;
 import org.pircbotx.hooks.events.MessageEvent;
 
-public class Join extends Command {
+public class Help extends Command {
 
-    private Config config;
     private PermissionManager manager;
+    private Config config;
 
-    public Join() {
-        super("Join", "Tells the bot to join a channel", "join #channel");
+    public Help() {
+        super("Help", "List command names and how to use them.", "help or help <command>");
     }
 
     @Override
     public void execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
-        if (args.length == 2) {
-            Channel target = event.getBot().getChannel(args[1]);
-            event.getBot().sendRawLineNow("KNOCK " + target.getName() + " :Asked to join by " + event.getUser().getNick());
-            event.getBot().joinChannel(target.getName());
-        }
     }
 
     @Override

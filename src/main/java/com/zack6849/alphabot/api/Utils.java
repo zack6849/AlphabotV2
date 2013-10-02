@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zack6849.alphabot.api;
 
 import com.google.gson.Gson;
@@ -21,9 +17,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author Zack
- */
 public class Utils {
 
     public static boolean isUrl(String s) {
@@ -128,6 +121,7 @@ public class Utils {
         }
         return returns;
     }
+
     public static String google(String s) {
         try {
             String temp = String.format("https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=%s", URLEncoder.encode(s));

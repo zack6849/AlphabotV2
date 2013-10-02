@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
@@ -11,16 +7,13 @@ import org.pircbotx.Channel;
 import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
 
-/**
- * @author Zack
- */
 public class Unban extends Command {
 
     private Config config;
     private PermissionManager manager;
 
     public Unban() {
-        super("Unban");
+        super("Unban", "Removes a ban on a hostmask", "Unban hostmask or Unban #channel hostmask");
     }
 
     //huehuehue le copypasta faec
@@ -28,16 +21,14 @@ public class Unban extends Command {
     public void execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         User sender = event.getUser();
+        //unban #channel username
         if (args.length == 3) {
             Channel target = event.getBot().getChannel(args[1]);
-            if (target.hasVoice(sender) || target.isOp(sender)) {
-            }
+            event.getBot().unBan(target, args[2]);
         }
+        //unaban username
         if (args.length == 2) {
-        }
-        if (args.length > 3) {
-            if (args[1].startsWith("#")) {
-            }
+            event.getBot().unBan(event.getChannel(), args[1]);
         }
     }
 
