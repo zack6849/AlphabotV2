@@ -3,27 +3,25 @@ package com.zack6849.alphabot.commands;
 import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
-import com.zack6849.alphabot.api.Utils;
 import org.pircbotx.hooks.events.MessageEvent;
 
-public class Google extends Command {
-    public Google() {
-        super("Google", "Searches google for something.", "Google how to google");
-    }
+public class Voice extends Command {
 
     private Config config;
     private PermissionManager manager;
 
+    public Voice() {
+        super("Voice", "Give a user voice in a channel", "Voice <username>");
+    }
+
     @Override
     public void execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
-        if (args.length >= 2) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
-                sb.append(args[i]).append(" ");
-            }
-            String google = sb.toString().trim();
-            event.getBot().sendMessage(event.getChannel(), Utils.google(google));
+        if (args.length == 2) {
+            event.getBot().voice(event.getChannel(), event.getBot().getUser(args[1]));
+        }
+        if (args.length == 3) {
+            event.getBot().voice(event.getBot().getChannel(args[1]), event.getBot().getUser(args[2]));
         }
     }
 
@@ -36,5 +34,4 @@ public class Google extends Command {
     public void setManager(PermissionManager manager) {
         this.manager = manager;
     }
-
 }

@@ -1,8 +1,6 @@
 package com.zack6849.alphabot.api;
 
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CommandRegistry {
 
@@ -27,7 +25,7 @@ public class CommandRegistry {
                 commands.put(name, (Command) Command.class.getClassLoader().loadClass("com.zack6849.alphabot.commands." + name).newInstance());
                 return commands.get(name);
             } catch (Exception ex) {
-                Logger.getLogger(CommandRegistry.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(CommandRegistry.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;

@@ -31,9 +31,10 @@ public class MessageEvent extends ListenerAdapter {
 
             } catch (Exception e) {
                 /*
-                 * Unknown command >implying i give a fuck
+                 * Unknown command
+                 * >implying i give a fuck
+                 * Logger.getLogger(MessageEvent.class.getName()).log(Level.SEVERE, null, e);
                  */
-                //Logger.getLogger(MessageEvent.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         for (String word : event.getMessage().split(" ")) {

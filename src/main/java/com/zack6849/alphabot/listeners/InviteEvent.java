@@ -16,12 +16,8 @@ public class InviteEvent extends ListenerAdapter {
 
     @Override
     public void onInvite(org.pircbotx.hooks.events.InviteEvent event) {
-        System.out.println("Invite envent fired!");
         if (config.isAutoAcceptInvite()) {
-            System.out.println("Joining channel " + event.getChannel());
             event.getBot().joinChannel(event.getChannel());
-        } else {
-            System.out.println("Not joining.");
         }
     }
 }

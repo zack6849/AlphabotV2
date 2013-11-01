@@ -48,7 +48,7 @@ public class Main {
             bot.setEncoding(Charset.forName("UTF-8"));
             System.out.println("Done, connecting to irc!");
             bot.connect(config.getServerHostame(), Integer.parseInt(config.getServerPort()), config.getServerPassword());
-            bot.sendMessage("NickServ", "identify " + config.getBotUsername() + " " + config.getBotPassword());
+            bot.sendMessage("NickServ", "identify " + config.getBotPassword());
             for (String channel : config.getChannels()) {
                 bot.joinChannel(channel);
             }
