@@ -1,19 +1,8 @@
 package com.zack6849.alphabot.api;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.pircbotx.Colors;
-
 import java.io.*;
 import java.net.*;
-import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +19,7 @@ public class Utils {
         }
     }
 
-    public static String getTitle(String link) {
+    /*public static String getTitle(String link) {
         try {
             AsyncHttpClient client = new AsyncHttpClient();
             Future<Response> future = client.prepareGet(link).setFollowRedirects(true).execute();
@@ -49,7 +38,7 @@ public class Utils {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
+    }*/
 
     public static String checkMojangServers() {
         String returns = null;
@@ -122,8 +111,8 @@ public class Utils {
         return returns;
     }
 
-    public static String google(String s) {
-        try {
+    /*public static String google(String s) {
+         try {
             String temp = String.format("https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=%s", URLEncoder.encode(s));
             URL u = new URL(temp);
             URLConnection c = u.openConnection();
@@ -152,5 +141,5 @@ public class Utils {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
+    }*/
 }

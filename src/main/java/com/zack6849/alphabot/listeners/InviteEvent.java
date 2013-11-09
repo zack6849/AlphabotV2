@@ -17,7 +17,7 @@ public class InviteEvent extends ListenerAdapter {
     @Override
     public void onInvite(org.pircbotx.hooks.events.InviteEvent event) {
         if (config.isAutoAcceptInvite()) {
-            event.getBot().joinChannel(event.getChannel());
+            event.getBot().sendIRC().joinChannel(event.getChannel());
         }
     }
 }

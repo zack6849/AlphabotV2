@@ -4,24 +4,19 @@ import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.CommandRegistry;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
+import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
-import org.pircbotx.exception.IrcException;
+import java.util.logging.*;
 import org.reflections.Reflections;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Scanner;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
     public static long startup = 0;
-
     public static void main(String[] args) {
-        try {
+        try{
             startup = System.currentTimeMillis();
-            final PircBotX bot = new PircBotX();
             Config config = new Config();
             PermissionManager manager = new PermissionManager(config);
             System.out.println("Loading and registering commands");
@@ -34,36 +29,25 @@ public class Main {
                 System.out.println("Registered command " + cmd.getName() + " as key " + c.getSimpleName());
                 CommandRegistry.register(cmd);
             }
-            bot.setName(config.getBotNickname());
-            bot.setLogin(config.getBotIdent());
-            bot.getListenerManager().addListener(new com.zack6849.alphabot.listeners.MessageEvent(config, manager));
-            bot.getListenerManager().addListener(new com.zack6849.alphabot.listeners.InviteEvent(config, manager));
-            bot.setVerbose(config.isDebug());
-            bot.setEncoding(Charset.forName("UTF-8"));
-            bot.setAutoReconnectChannels(config.isAutoRejoinChannel());
-            bot.setAutoReconnect(config.isAutoReconnectServer());
-            bot.setAutoNickChange(config.isAutoNickChange());
-            bot.setVersion(config.getCtcpVersion());
-            bot.setFinger(config.getCtcpFinger());
-            bot.setEncoding(Charset.forName("UTF-8"));
-            System.out.println("Done, connecting to irc!");
-            bot.connect(config.getServerHostame(), Integer.parseInt(config.getServerPort()), config.getServerPassword());
-            bot.sendMessage("NickServ", "identify " + config.getBotPassword());
-            for (String channel : config.getChannels()) {
-                bot.joinChannel(channel);
+            Configuration.Builder builder = new Configuration.Builder();
+            builder.setName(config.getBotNickname());
+            builder.setRealName(config.getBotUsername());
+            builder.setLogin(config.getBotIdent());
+            builder.setFinger(config.getCtcpFinger());
+            builder.setEncoding(Charset.isSupported("UTF-8") ? Charset.forName("UTF-8") : Charset.defaultCharset());
+            builder.setNickservPassword(config.getBotPassword());
+            builder.setVersion("Alphbot v2.0 BETA");
+            builder.setServer(config.getServerHostame(), Integer.parseInt(config.getServerPort()), config.getServerPassword());
+            builder.getListenerManager().addListener(new com.zack6849.alphabot.listeners.MessageEvent(config, manager));
+            builder.getListenerManager().addListener(new com.zack6849.alphabot.listeners.InviteEvent(config, manager));
+            for(String channel : config.getChannels()){
+                builder.addAutoJoinChannel(channel);
             }
-            new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                    Scanner in = new Scanner(System.in);
-                    String line = "";
-                    while ((line = in.nextLine()) != null) {
-                        bot.sendRawLineNow(line);
-                    }
-                }
-            }).start();
-        } catch (IOException | IrcException ex) {
+            PircBotX bot = new PircBotX(builder.buildConfiguration());
+            bot.startBot();
+            bot.startBot();
+            System.out.println("Done, connecting to irc!");
+        }catch(Exception ex){
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

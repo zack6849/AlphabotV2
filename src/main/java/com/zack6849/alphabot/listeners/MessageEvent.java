@@ -24,11 +24,9 @@ public class MessageEvent extends ListenerAdapter {
                     Command command = CommandRegistry.getCommand(classname);
                     command.setConfig(config);
                     command.execute(event);
-
                 } else {
-                    event.getBot().sendNotice(event.getUser(), config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
+                    event.getUser().send().notice(config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
                 }
-
             } catch (Exception e) {
                 /*
                  * Unknown command
@@ -39,7 +37,7 @@ public class MessageEvent extends ListenerAdapter {
         }
         for (String word : event.getMessage().split(" ")) {
             if (Utils.isUrl(word)) {
-                event.getBot().sendMessage(event.getChannel(), event.getUser().getNick() + "'s URL: " + Utils.getTitle(word));
+                //event.getUser().send().message(event.getChannel(), event.getUser().getNick() + "'s URL: " + Utils.getTitle(word));
             }
         }
     }

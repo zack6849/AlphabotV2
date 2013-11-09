@@ -15,25 +15,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.pircbotx</groupId>
+            <artifactId>pircbotx</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.pircbotx</groupId>
-            <artifactId>pircbotx</artifactId>
-            <version>1.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ning</groupId>
-            <artifactId>async-http-client</artifactId>
-            <version>1.7.19</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
@@ -46,7 +36,7 @@
             <version>2.0</version>
         </dependency>
         <dependency>
-            <groupId>bsh</groupId>
+            <groupId>org.beanshell</groupId>
             <artifactId>bsh</artifactId>
             <version>2.0b4</version>
         </dependency>
@@ -92,11 +82,10 @@
                                 <includes>
                                     <include>org.pircbotx:pircbotx</include>
                                     <include>org.reflections:reflections</include>
-                                    <include>com.google.guava:guava</include>
                                     <include>dom4j:dom4j</include>
                                     <include>org.javassist:javassist</include>
                                     <include>xml-apis:xml-apis</include>
-                                    <include>org.beanshell:bsh</include>
+                                    <include>org.beanshell:bsh:jar:2.0b4</include>
                                     <include>com.google.code.gson:gson</include>
                                 </includes>
                             </artifactSet>

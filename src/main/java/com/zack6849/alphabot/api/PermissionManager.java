@@ -25,7 +25,6 @@ public class PermissionManager {
         try {
             properties = new Properties();
             File config = new File("permissions.properties");
-
             if (!config.exists()) {
                 System.out.println("[!!] No configuration file found! generating a new one! [!!]");
                 BufferedReader s = new BufferedReader(new InputStreamReader(Main.class.getResourceAsStream("/permissions.properties")));
