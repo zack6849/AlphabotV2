@@ -6,16 +6,25 @@ import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
-import java.util.logging.*;
 import org.reflections.Reflections;
+import org.slf4j.impl.SimpleLogger;
 
 import java.nio.charset.Charset;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
     public static long startup = 0;
+
     public static void main(String[] args) {
-        try{
+        System.setProperty(SimpleLogger.SHOW_DATE_TIME_KEY, "true");
+        System.setProperty(SimpleLogger.DATE_TIME_FORMAT_KEY, "[HH:mm:ss]");
+        System.setProperty(SimpleLogger.SHOW_THREAD_NAME_KEY, "false");
+        System.setProperty(SimpleLogger.LEVEL_IN_BRACKETS_KEY, "true");
+        System.setProperty(SimpleLogger.SHOW_LOG_NAME_KEY, "false");
+        System.out.println("Starting");
+        try {
             startup = System.currentTimeMillis();
             Config config = new Config();
             PermissionManager manager = new PermissionManager(config);
@@ -40,14 +49,14 @@ public class Main {
             builder.setServer(config.getServerHostame(), Integer.parseInt(config.getServerPort()), config.getServerPassword());
             builder.getListenerManager().addListener(new com.zack6849.alphabot.listeners.MessageEvent(config, manager));
             builder.getListenerManager().addListener(new com.zack6849.alphabot.listeners.InviteEvent(config, manager));
-            for(String channel : config.getChannels()){
+            for (String channel : config.getChannels()) {
                 builder.addAutoJoinChannel(channel);
             }
             PircBotX bot = new PircBotX(builder.buildConfiguration());
             bot.startBot();
-            bot.startBot();
             System.out.println("Done, connecting to irc!");
-        }catch(Exception ex){
+        } catch (Exception ex) {
+            ex.printStackTrace();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
