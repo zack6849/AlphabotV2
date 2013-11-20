@@ -23,12 +23,12 @@ public class Unban extends Command {
         User sender = event.getUser();
         //unban #channel username
         if (args.length == 3) {
-            Channel target = event.getBot().getChannel(args[1]);
-            event.getBot().unBan(target, args[2]);
+            Channel target = event.getBot().getUserChannelDao().getChannel(args[1]);
+            target.send().ban(args[2]);
         }
         //unaban username
         if (args.length == 2) {
-            event.getBot().unBan(event.getChannel(), args[1]);
+            event.getChannel().send().ban(args[1]);
         }
     }
 

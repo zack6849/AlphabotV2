@@ -16,7 +16,8 @@ public class Kill extends Command {
 
     @Override
     public void execute(MessageEvent event) {
-        event.getBot().shutdown();
+        event.getBot().stopBotReconnect();
+        event.getBot().sendIRC().quitServer("Shutting down...");
     }
 
     @Override

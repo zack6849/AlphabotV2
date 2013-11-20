@@ -23,7 +23,7 @@ public class Uptime extends Command {
         int hours = (int) (time / (3600000)) % 24;
         int days = (int) (time / 86400000);
         String uptime = String.format("%d Days %d Hours %d Minutes and %d seconds", days, hours, minutes, seconds);
-        event.getBot().sendMessage(event.getChannel(), "Current bot uptime: " + uptime);
+        event.getChannel().send().message("Current bot uptime: " + uptime);
     }
 
     @Override

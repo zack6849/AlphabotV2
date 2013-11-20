@@ -18,10 +18,10 @@ public class Voice extends Command {
     public void execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         if (args.length == 2) {
-            event.getBot().voice(event.getChannel(), event.getBot().getUser(args[1]));
+            event.getChannel().send().voice(event.getBot().getUserChannelDao().getUser(args[1]));
         }
         if (args.length == 3) {
-            event.getBot().voice(event.getBot().getChannel(args[1]), event.getBot().getUser(args[2]));
+            event.getBot().getUserChannelDao().getChannel(args[1]).send().voice(event.getBot().getUserChannelDao().getUser(args[2]));
         }
     }
 

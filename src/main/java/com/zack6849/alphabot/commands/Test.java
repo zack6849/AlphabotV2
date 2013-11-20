@@ -17,7 +17,7 @@ public class Test extends Command {
 
     @Override
     public void execute(MessageEvent event) {
-        event.getBot().sendMessage(event.getChannel(), "Test!");
+        event.getChannel().send().message("Test!");
     }
 
     @Override

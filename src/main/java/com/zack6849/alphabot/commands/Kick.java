@@ -21,71 +21,33 @@ public class Kick extends Command {
         String[] args = event.getMessage().split(" ");
         User sender = event.getUser();
         if (args.length == 3) {
-            Channel chan = event.getBot().getChannel(args[1]);
-            User target = event.getBot().getUser(args[2]);
-            if (chan.isOp(sender)) {
-                event.getBot().kick(chan, target);
-            }
-            if (chan.hasVoice(sender)) {
-                if (!chan.hasVoice(target) && !chan.isOp(target)) {
-                    event.getBot().kick(chan, target);
-                } else {
-                    event.getBot().sendNotice(sender, config.getPermissionDenied());
-                }
-            }
+            Channel chan = event.getBot().getUserChannelDao().getChannel(args[1]);
+            User target = event.getBot().getUserChannelDao().getUser(args[2]);
+            chan.send().kick(target);
         }
         if (args.length == 2) {
             Channel chan = event.getChannel();
-            User target = event.getBot().getUser(args[1]);
-            if (chan.isOp(sender)) {
-                event.getBot().kick(chan, target);
-            }
-            if (chan.hasVoice(sender)) {
-                if (!chan.hasVoice(target) && !chan.isOp(target)) {
-                    event.getBot().kick(chan, target);
-                } else {
-                    event.getBot().sendNotice(sender, config.getPermissionDenied());
-                }
-            }
+            User target = event.getBot().getUserChannelDao().getUser(args[1]);
+            chan.send().kick(target);
         }
         if (args.length > 3) {
-            //!kick #channel username reason
             if (args[1].startsWith("#")) {
                 StringBuilder sb = new StringBuilder();
                 for (int i = 3; i < args.length; i++) {
                     sb.append(args[i]).append(" ");
                 }
                 String reason = sb.toString().trim();
-                Channel chan = event.getBot().getChannel(args[1]);
-                User target = event.getBot().getUser(args[2]);
-                if (chan.isOp(sender)) {
-                    event.getBot().kick(chan, target, reason);
-                }
-                if (chan.hasVoice(sender)) {
-                    if (!chan.hasVoice(target) && !chan.isOp(target)) {
-                        event.getBot().kick(chan, target, reason);
-                    } else {
-                        event.getBot().sendNotice(sender, config.getPermissionDenied());
-                    }
-                }
+                Channel chan = event.getBot().getUserChannelDao().getChannel(args[1]);
+                User target = event.getBot().getUserChannelDao().getUser(args[2]);
+                chan.send().kick(target, reason);
             } else {
-                //!kick user reason
                 StringBuilder sb = new StringBuilder();
                 for (int i = 2; i < args.length; i++) {
                     sb.append(args[i]).append(" ");
                 }
                 Channel chan = event.getChannel();
-                User target = event.getBot().getUser(args[1]);
-                if (chan.isOp(sender)) {
-                    event.getBot().kick(chan, target, sb.toString().trim());
-                }
-                if (chan.hasVoice(sender)) {
-                    if (!chan.hasVoice(target) && !chan.isOp(target)) {
-                        event.getBot().kick(chan, target, sb.toString().trim());
-                    } else {
-                        event.getBot().sendNotice(sender, config.getPermissionDenied());
-                    }
-                }
+                User target = event.getBot().getUserChannelDao().getUser(args[1]);
+                chan.send().kick(target, sb.toString().trim());
             }
         }
     }

@@ -18,14 +18,15 @@ public class Part extends Command {
     public void execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         if (args.length == 2) {
-            Channel target = event.getBot().getChannel(args[1]);
-            if (event.getBot().getChannels().contains(target)) {
-                event.getBot().partChannel(target);
+            Channel target = event.getBot().getUserChannelDao().getChannel(args[1]);
+            event.getBot().getUserChannelDao().getAllChannels();
+            if (event.getBot().getUserChannelDao().getAllChannels().contains(target)) {
+                target.send().part();
             } else {
-                event.getBot().sendNotice(event.getUser(), "I'm not in the channel " + args[1] + "!");
+                event.getUser().send().notice("I'm not in the channel " + args[1] + "!");
             }
         } else {
-            event.getBot().partChannel(event.getChannel());
+            event.getChannel().send().part();
         }
     }
 

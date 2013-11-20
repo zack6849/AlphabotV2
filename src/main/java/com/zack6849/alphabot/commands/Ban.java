@@ -23,32 +23,14 @@ public class Ban extends Command {
         if (args.length == 3) {
             Channel chan = event.getBot().getUserChannelDao().getChannel(args[1]);
             User target = event.getBot().getUserChannelDao().getUser(args[2]);
-            if (chan.isOp(sender)) {
-                chan.send().kick(target);
-            }
-            if (chan.hasVoice(sender)) {
-                if (!chan.hasVoice(target) && !chan.isOp(target)) {
-                    chan.send().ban("*!*@" + target.getHostmask());
-                    chan.send().kick(target);
-                } else {
-                    sender.send().notice(config.getPermissionDenied());
-                }
-            }
+            chan.send().ban("*!*@" + target.getHostmask());
+            chan.send().kick(target);
         }
         if (args.length == 2) {
             Channel chan = event.getChannel();
             User target = event.getBot().getUserChannelDao().getUser(args[1]);
-            if (chan.isOp(sender)) {
-                chan.send().kick(target);
-            }
-            if (chan.hasVoice(sender)) {
-                if (!chan.hasVoice(target) && !chan.isOp(target)) {
-                    chan.send().ban("*!*@" + target.getHostmask());
-                    chan.send().kick(target);
-                } else {
-                    sender.send().notice(config.getPermissionDenied());
-                }
-            }
+            chan.send().ban("*!*@" + target.getHostmask());
+            chan.send().kick(target);
         }
         if (args.length > 3) {
             if (args[1].startsWith("#")) {
@@ -59,18 +41,8 @@ public class Ban extends Command {
                 String reason = sb.toString().trim();
                 Channel chan = event.getBot().getUserChannelDao().getChannel(args[1]);
                 User target = event.getBot().getUserChannelDao().getUser(args[2]);
-                if (chan.isOp(sender)) {
-                    chan.send().ban("*!*@" + target.getHostmask());
-                    chan.send().kick(target, reason);
-                }
-                if (chan.hasVoice(sender)) {
-                    if (!chan.hasVoice(target) && !chan.isOp(target)) {
-                        chan.send().ban("*!*@" + target.getHostmask());
-                        chan.send().kick(target, reason);
-                    } else {
-                        sender.send().notice(config.getPermissionDenied());
-                    }
-                }
+                chan.send().ban("*!*@" + target.getHostmask());
+                chan.send().kick(target, reason);
             } else {
                 StringBuilder sb = new StringBuilder();
                 for (int i = 2; i < args.length; i++) {
@@ -78,18 +50,8 @@ public class Ban extends Command {
                 }
                 Channel chan = event.getChannel();
                 User target = event.getBot().getUserChannelDao().getUser(args[1]);
-                if (chan.isOp(sender)) {
-                    chan.send().ban("*!*@" + target.getHostmask());
-                    chan.send().kick(target, sb.toString().trim());
-                }
-                if (chan.hasVoice(sender)) {
-                    if (!chan.hasVoice(target) && !chan.isOp(target)) {
-                        chan.send().ban("*!*@" + target.getHostmask());
-                        chan.send().kick(target, sb.toString().trim());
-                    } else {
-                        sender.send().notice(config.getPermissionDenied());
-                    }
-                }
+                chan.send().ban("*!*@" + target.getHostmask());
+                chan.send().kick(target, sb.toString().trim());
             }
         }
     }

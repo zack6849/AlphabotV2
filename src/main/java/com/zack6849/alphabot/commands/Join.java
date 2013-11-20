@@ -18,11 +18,12 @@ public class Join extends Command {
     @Override
     public void execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
-        if (args.length == 2) {
-            Channel target = event.getBot().getChannel(args[1]);
-            event.getBot().sendRawLineNow("KNOCK " + target.getName() + " :Asked to join by " + event.getUser().getNick());
-            event.getBot().joinChannel(target.getName());
+        Channel target = event.getBot().getUserChannelDao().getChannel(args[1]);
+        if (target.isInviteOnly()) {
+            event.getBot().sendRaw().rawLineNow("KNOCK " + target.getName() + " :Asked to join this channel by user " + event.getUser().getNick() + " in channel " + event.getChannel().getName());
+            return;
         }
+        event.getBot().sendIRC().joinChannel(target.getName());
     }
 
     @Override

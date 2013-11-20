@@ -4,7 +4,7 @@ import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.CommandRegistry;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.hooks.events.MessageEvent;
 
 public class Help extends Command {
@@ -22,15 +22,15 @@ public class Help extends Command {
         if (args.length == 1) {
             for (String s : CommandRegistry.commands.keySet()) {
                 Command command = CommandRegistry.getCommand(s);
-                event.getBot().sendNotice(event.getUser(), String.format("%s - %s", command.getName(), command.getDescription()));
+                event.getUser().send().notice(String.format("%s - %s", command.getName(), command.getDescription()));
             }
         }
         if (args.length == 2) {
             Command command = CommandRegistry.getCommand(StringUtils.capitalize(args[1].toLowerCase()));
             if (command != null) {
-                event.getBot().sendNotice(event.getUser(), String.format("Help for command: %s - %s - %s", command.getName(), command.getDescription(), command.getHelp()));
+                event.getUser().send().notice(String.format("Help for command: %s - %s - %s", command.getName(), command.getDescription(), command.getHelp()));
             } else {
-                event.getBot().sendNotice(event.getUser(), "Could not find the command " + args[1] + ", are you sure you spelled it right?");
+                event.getUser().send().notice("Could not find the command " + args[1] + ", are you sure you spelled it right?");
             }
         }
     }
