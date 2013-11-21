@@ -36,7 +36,7 @@ public class Exec extends Command {
     }
 
     @Override
-    public void execute(MessageEvent event) {
+    public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         StringBuilder sb = new StringBuilder();
         if (args.length >= 2) {
@@ -50,12 +50,14 @@ public class Exec extends Command {
                 }
                 String command = sb.toString().trim();
                 interpreter.eval(command);
+                return true;
             } catch (EvalError ex) {
                 Logger.getLogger(Exec.class.getName()).log(Level.SEVERE, null, ex);
                 event.getChannel().send().message(ex.toString());
+                return true;
             }
-
         }
+        return false;
     }
 
     @Override

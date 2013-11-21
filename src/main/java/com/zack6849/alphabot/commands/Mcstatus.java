@@ -6,27 +6,19 @@ import com.zack6849.alphabot.api.PermissionManager;
 import com.zack6849.alphabot.api.Utils;
 import org.pircbotx.hooks.events.MessageEvent;
 
-public class Google extends Command {
-    public Google() {
-        super("Google", "Searches google for something.", "Google how to google");
-    }
 
+public class Mcstatus extends Command {
     private Config config;
     private PermissionManager manager;
 
+    public Mcstatus() {
+        super("Mcstatus", "Shows the status of various minecraft servers", "if you need help with this command, i will be dissapointed.");
+    }
+
     @Override
     public boolean execute(MessageEvent event) {
-        String[] args = event.getMessage().split(" ");
-        if (args.length >= 2) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
-                sb.append(args[i]).append(" ");
-            }
-            String google = sb.toString().trim();
-            event.getChannel().send().message(Utils.google(google));
-            return true;
-        }
-        return false;
+        event.getChannel().send().message(Utils.checkMojangServers());
+        return true;
     }
 
     @Override
@@ -38,5 +30,4 @@ public class Google extends Command {
     public void setManager(PermissionManager manager) {
         this.manager = manager;
     }
-
 }

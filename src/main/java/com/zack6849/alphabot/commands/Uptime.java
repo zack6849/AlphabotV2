@@ -16,7 +16,7 @@ public class Uptime extends Command {
     }
 
     @Override
-    public void execute(MessageEvent event) {
+    public boolean execute(MessageEvent event) {
         Long time = System.currentTimeMillis() - Main.startup;
         int seconds = (int) (time / 1000) % 60;
         int minutes = (int) (time / (60000)) % 60;
@@ -24,6 +24,7 @@ public class Uptime extends Command {
         int days = (int) (time / 86400000);
         String uptime = String.format("%d Days %d Hours %d Minutes and %d seconds", days, hours, minutes, seconds);
         event.getChannel().send().message("Current bot uptime: " + uptime);
+        return true;
     }
 
     @Override

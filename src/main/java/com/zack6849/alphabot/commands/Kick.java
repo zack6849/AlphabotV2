@@ -17,18 +17,20 @@ public class Kick extends Command {
     }
 
     @Override
-    public void execute(MessageEvent event) {
+    public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         User sender = event.getUser();
         if (args.length == 3) {
             Channel chan = event.getBot().getUserChannelDao().getChannel(args[1]);
             User target = event.getBot().getUserChannelDao().getUser(args[2]);
             chan.send().kick(target);
+            return true;
         }
         if (args.length == 2) {
             Channel chan = event.getChannel();
             User target = event.getBot().getUserChannelDao().getUser(args[1]);
             chan.send().kick(target);
+            return true;
         }
         if (args.length > 3) {
             if (args[1].startsWith("#")) {
@@ -40,6 +42,7 @@ public class Kick extends Command {
                 Channel chan = event.getBot().getUserChannelDao().getChannel(args[1]);
                 User target = event.getBot().getUserChannelDao().getUser(args[2]);
                 chan.send().kick(target, reason);
+                return true;
             } else {
                 StringBuilder sb = new StringBuilder();
                 for (int i = 2; i < args.length; i++) {
@@ -48,8 +51,10 @@ public class Kick extends Command {
                 Channel chan = event.getChannel();
                 User target = event.getBot().getUserChannelDao().getUser(args[1]);
                 chan.send().kick(target, sb.toString().trim());
+                return true;
             }
         }
+        return false;
     }
 
     public boolean isChannel(String name) {

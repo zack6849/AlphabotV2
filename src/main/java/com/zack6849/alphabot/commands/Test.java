@@ -16,8 +16,9 @@ public class Test extends Command {
     }
 
     @Override
-    public void execute(MessageEvent event) {
+    public boolean execute(MessageEvent event) {
         event.getChannel().send().message("Test!");
+        return true;
     }
 
     @Override

@@ -17,13 +17,14 @@ public class Help extends Command {
     }
 
     @Override
-    public void execute(MessageEvent event) {
+    public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         if (args.length == 1) {
             for (String s : CommandRegistry.commands.keySet()) {
                 Command command = CommandRegistry.getCommand(s);
                 event.getUser().send().notice(String.format("%s - %s", command.getName(), command.getDescription()));
             }
+            return true;
         }
         if (args.length == 2) {
             Command command = CommandRegistry.getCommand(StringUtils.capitalize(args[1].toLowerCase()));
@@ -32,7 +33,9 @@ public class Help extends Command {
             } else {
                 event.getUser().send().notice("Could not find the command " + args[1] + ", are you sure you spelled it right?");
             }
+            return true;
         }
+        return false;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.zack6849.alphabot.listeners;
 
 import com.zack6849.alphabot.api.*;
+import org.pircbotx.Colors;
 import org.pircbotx.hooks.ListenerAdapter;
 
 public class MessageEvent extends ListenerAdapter {
@@ -23,7 +24,10 @@ public class MessageEvent extends ListenerAdapter {
                 if (manager.hasPermission(permission, event.getUser())) {
                     Command command = CommandRegistry.getCommand(classname);
                     command.setConfig(config);
-                    command.execute(event);
+                    if (!command.execute(event)) {
+                        //better command handling? :D :D :Ds
+                        event.getChannel().send().message(Colors.RED + "An error occurred! " + command.getHelp());
+                    }
                 } else {
                     event.getUser().send().notice(config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
                 }

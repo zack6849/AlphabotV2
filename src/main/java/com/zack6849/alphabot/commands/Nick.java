@@ -3,27 +3,21 @@ package com.zack6849.alphabot.commands;
 import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
-import com.zack6849.alphabot.api.Utils;
 import org.pircbotx.hooks.events.MessageEvent;
 
-public class Google extends Command {
-    public Google() {
-        super("Google", "Searches google for something.", "Google how to google");
-    }
-
+public class Nick extends Command {
     private Config config;
     private PermissionManager manager;
+
+    public Nick() {
+        super("Nick", "changes the bot's nickname", "Nick newnickname");
+    }
 
     @Override
     public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
-        if (args.length >= 2) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
-                sb.append(args[i]).append(" ");
-            }
-            String google = sb.toString().trim();
-            event.getChannel().send().message(Utils.google(google));
+        if (args.length >= 1) {
+            event.getBot().sendIRC().changeNick(event.getMessage().split(" ")[1]);
             return true;
         }
         return false;
@@ -38,5 +32,4 @@ public class Google extends Command {
     public void setManager(PermissionManager manager) {
         this.manager = manager;
     }
-
 }

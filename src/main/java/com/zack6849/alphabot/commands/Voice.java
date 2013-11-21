@@ -15,14 +15,17 @@ public class Voice extends Command {
     }
 
     @Override
-    public void execute(MessageEvent event) {
+    public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         if (args.length == 2) {
             event.getChannel().send().voice(event.getBot().getUserChannelDao().getUser(args[1]));
+            return true;
         }
         if (args.length == 3) {
             event.getBot().getUserChannelDao().getChannel(args[1]).send().voice(event.getBot().getUserChannelDao().getUser(args[2]));
+            return true;
         }
+        return false;
     }
 
     @Override
