@@ -5,21 +5,22 @@ import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.events.MessageEvent;
 
-
-public class Test extends Command {
-
-    private Config config;
+public class Say extends Command {
     private PermissionManager manager;
+    private Config config;
 
-    public Test() {
-        super("Test", "This is a test command", "Test!");
+    public Say(){
+        super("Say", "Send a message to the current channel");
     }
-
     @Override
     public boolean execute(MessageEvent event) {
-        event.getChannel().send().message("Test!");
-        event.getChannel().send().message(event.getUser().getUserLevels(event.getChannel()).toString());
-        return true;
+      String[] args = event.getMessage().split(" ");
+      StringBuilder builder = new StringBuilder();
+      for(int i = 1; i < args.length; i++){
+          builder.append(args[i]).append(" ");
+      }
+      event.getChannel().send().message(builder.toString().trim());
+      return true;
     }
 
     @Override
@@ -31,5 +32,4 @@ public class Test extends Command {
     public void setManager(PermissionManager manager) {
         this.manager = manager;
     }
-
 }

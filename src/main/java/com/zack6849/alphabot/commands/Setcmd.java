@@ -5,31 +5,33 @@ import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.events.MessageEvent;
 
-
-public class Test extends Command {
-
+/**
+ * Created with IntelliJ IDEA.
+ * User: Zack
+ * Date: 11/24/13
+ * Time: 3:43 AM
+ * To change this template use File | Settings | File Templates.
+ */
+public class Setcmd extends Command {
     private Config config;
     private PermissionManager manager;
-
-    public Test() {
-        super("Test", "This is a test command", "Test!");
+    public Setcmd(){
+        super("Setcmd", "Set a custom command", "setcmd <trigger> <output> ex $setcmd test this is a test!");
     }
 
     @Override
     public boolean execute(MessageEvent event) {
-        event.getChannel().send().message("Test!");
-        event.getChannel().send().message(event.getUser().getUserLevels(event.getChannel()).toString());
-        return true;
+
+        return false;
     }
 
     @Override
     public void setConfig(Config config) {
-        this.config = config;
+      this.config = config;
     }
 
     @Override
     public void setManager(PermissionManager manager) {
         this.manager = manager;
     }
-
 }

@@ -41,7 +41,7 @@ public class MessageEvent extends ListenerAdapter {
         }
         for (String word : event.getMessage().split(" ")) {
             if (Utils.isUrl(word)) {
-                //event.getUser().send().message(event.getChannel(), event.getUser().getNick() + "'s URL: " + Utils.getTitle(word));
+               // event.getUser().send().message(event.getChannel(), event.getUser().getNick() + "'s URL: " + Utils.getTitle(word));
             }
         }
     }

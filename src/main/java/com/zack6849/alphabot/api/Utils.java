@@ -5,10 +5,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.pircbotx.Channel;
 import org.pircbotx.Colors;
+import org.pircbotx.User;
+import org.pircbotx.UserLevel;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -25,6 +29,20 @@ public class Utils {
         } else {
             return false;
         }
+    }
+
+    public int getRank(Channel chan, User user){
+        ArrayList<Integer> levels = new ArrayList<Integer>();
+        int highest = -1;
+        for(UserLevel level : user.getUserLevels(chan)){
+            levels.add(level.ordinal());
+        }
+        for(int level : levels){
+            if(highest < level){
+                highest = level;
+            }
+        }
+        return highest;
     }
 
     /*public static String getTitle(String link) {

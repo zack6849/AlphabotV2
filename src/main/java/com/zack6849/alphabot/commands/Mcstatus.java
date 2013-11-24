@@ -12,7 +12,7 @@ public class Mcstatus extends Command {
     private PermissionManager manager;
 
     public Mcstatus() {
-        super("Mcstatus", "Shows the status of various minecraft servers", "if you need help with this command, i will be dissapointed.");
+        super("Mcstatus", "Shows the status of various minecraft servers");
     }
 
     @Override

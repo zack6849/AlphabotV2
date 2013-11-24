@@ -53,8 +53,9 @@ public class Main {
                 builder.addAutoJoinChannel(channel);
             }
             PircBotX bot = new PircBotX(builder.buildConfiguration());
+            System.out.println("Starting bot...");
             bot.startBot();
-            System.out.println("Done, connecting to irc!");
+            System.out.println("Shutting down");
         } catch (Exception ex) {
             ex.printStackTrace();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
