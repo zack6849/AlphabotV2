@@ -21,14 +21,12 @@ public class Unban extends Command {
     public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         User sender = event.getUser();
-        //unban #channel username
         if (args.length == 3) {
             Channel target = event.getBot().getUserChannelDao().getChannel(args[1]);
             //target.send().unBan();
             target.send().ban(args[2]);
             return true;
         }
-        //unban username
         if (args.length == 2) {
             event.getChannel().send().ban(args[1]);
             return true;

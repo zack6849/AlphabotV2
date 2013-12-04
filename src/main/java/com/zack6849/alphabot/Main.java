@@ -34,11 +34,12 @@ public class Main {
             Reflections reflections = new Reflections("com.zack6849.alphabot.commands");
             Set<Class<? extends Command>> subTypes = reflections.getSubTypesOf(Command.class);
             for (Class c : subTypes) {
-                Command cmd = (Command) CommandRegistry.getCommand(c.getSimpleName());
+                Command cmd = CommandRegistry.getCommand(c.getSimpleName());
                 System.out.println("Registered command " + cmd.getName() + " as key " + c.getSimpleName());
                 CommandRegistry.register(cmd);
             }
-            Configuration.Builder builder = new Configuration.Builder();
+            //i have no idea what this is, but IDEA wouldn't shut the fuck up about changing it.
+            Configuration.Builder<PircBotX> builder = new Configuration.Builder<PircBotX>();
             builder.setName(config.getBotNickname());
             builder.setRealName(config.getBotUsername());
             builder.setLogin(config.getBotIdent());

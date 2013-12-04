@@ -5,6 +5,10 @@ import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.events.MessageEvent;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Zack
@@ -21,7 +25,28 @@ public class Setcmd extends Command {
 
     @Override
     public boolean execute(MessageEvent event) {
-
+        String[] args = event.getMessage().split(" ");
+        if(args.length > 1){
+            String commandname = args[1];
+            StringBuilder sb = new StringBuilder();
+            for(int i = 2; i < args.length; i++){
+                sb.append(args[i]).append(" ");
+            }
+            try{
+                File command = new File("commands/" + event.getChannel().getName() + "/" + commandname + ".cmd");
+                command.getParentFile().mkdirs();
+                command.createNewFile();
+                PrintWriter writer = new PrintWriter(new FileWriter(command));
+                for(String s : sb.toString().trim().split("\\\\n")){
+                    writer.println(s);
+                }
+                writer.flush();
+                writer.close();
+                return true;
+            }catch (Exception e){
+                 event.getChannel().send().message("An error occured!");
+            }
+        }
         return false;
     }
 
