@@ -24,6 +24,7 @@ public class Config {
     private boolean autoAcceptInvite;
     private boolean useSSL;
     private boolean verifySSL;
+    private boolean enableChatSocket;
     private String trigger;
     private String serverHostame;
     private String serverPassword;
@@ -38,6 +39,7 @@ public class Config {
     private List<String> loggedChannels;
     private String permissionDenied;
     private Properties properties;
+    private int chatSocketPort;
 
     public void load() {
         try {
@@ -70,6 +72,8 @@ public class Config {
             this.setAutoReconnectServer(Boolean.parseBoolean(properties.getProperty("auto-reconnect")));
             this.setAutoRejoinChannel(Boolean.parseBoolean(properties.getProperty("auto-rejoin")));
             this.setAutoAcceptInvite(Boolean.parseBoolean(properties.getProperty("auto-accept-invite")));
+            this.setEnableChatSocket(Boolean.parseBoolean(properties.getProperty("enable-chat-socket")));
+            this.setChatSocketPort(Integer.parseInt(properties.getProperty("chat-socket-port")));
             this.setChannels(Arrays.asList(properties.getProperty("channels").split(" ")));
             this.setLoggedChannels(Arrays.asList(properties.getProperty("channels-log").split(" ")));
             this.setUseSSL(Boolean.parseBoolean(properties.getProperty("use-ssl")));
@@ -362,6 +366,33 @@ public class Config {
      */
     public void setPermissionDenied(String permissionDenied) {
         this.permissionDenied = permissionDenied;
+    }
+
+    /**
+     * If the socket chat listener should be enabled
+     *
+     * @return If the socket chat listener should be enabled
+     */
+    public boolean isEnableChatSocket() {
+        return enableChatSocket;
+    }
+
+    /**
+     * Enable or disable the socket chat listener
+     *
+     * @param enableChatSocket Enable or disable the socket chat listener
+     */
+    public void setEnableChatSocket(boolean enableChatSocket) {
+        this.enableChatSocket = enableChatSocket;
+    }
+
+
+    public int getChatSocketPort() {
+        return chatSocketPort;
+    }
+
+    public void setChatSocketPort(int chatSocketPort) {
+        this.chatSocketPort = chatSocketPort;
     }
 
     public boolean isAdmin(String username, String hostmask) {

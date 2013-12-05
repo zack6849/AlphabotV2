@@ -4,6 +4,7 @@ import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.CommandRegistry;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
+import com.zack6849.runnables.ChatSocketListener;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.reflections.Reflections;
@@ -26,7 +27,7 @@ public class Main {
         System.out.println("Starting");
         try {
             startup = System.currentTimeMillis();
-            Config config = new Config();
+            final Config config = new Config();
             PermissionManager manager = new PermissionManager(config);
             System.out.println("Loading and registering commands");
             config.load();
@@ -55,6 +56,9 @@ public class Main {
             }
             PircBotX bot = new PircBotX(builder.buildConfiguration());
             System.out.println("Starting bot...");
+            if (config.isEnableChatSocket()) {
+                new Thread(new ChatSocketListener(bot, config.getChatSocketPort())).start();
+            }
             bot.startBot();
             System.out.println("Shutting down");
         } catch (Exception ex) {
