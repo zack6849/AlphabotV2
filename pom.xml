@@ -90,8 +90,7 @@
                             <!--minimizeJar>true</minimizeJar-->
                             <artifactSet>
                                 <includes>
-                                    <include>org.pircbotx:pircbotx</include>
-                                    <include>org.reflections:reflections</include>
+                                    <include>*:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

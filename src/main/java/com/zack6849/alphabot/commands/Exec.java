@@ -1,3 +1,20 @@
+/*
+ *  This file is part of Alphabot.
+ *
+ *  Alphabot is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Alphabot is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Alphabot.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.zack6849.alphabot.commands;
 
 import bsh.EvalError;
@@ -18,12 +35,15 @@ public class Exec extends Command {
             interpreter = new bsh.Interpreter();
             interpreter.getNameSpace().doSuperImport();
             interpreter.set("utils", new Utils());
+            interpreter.set("Utils", interpreter.get("utils"));
+            interpreter.set("config", config);
             interpreter.set("conf", config);
             interpreter.set("registry", new CommandRegistry());
             interpreter.set("manager", manager);
             if (System.getProperty("os.name").toLowerCase().contains("linux")) {
                 interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = java.lang.Runtime.getRuntime().exec(new java.lang.String[] {\"/bin/sh\", \"-c\", command}); java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
             } else {
+                // TODO : Make exec compatible with windows.
                 //interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = Runtime.getRuntime().exec(command}); BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
             }
         } catch (Exception ex) {

@@ -1,3 +1,20 @@
+/*
+ *  This file is part of Alphabot.
+ *
+ *  Alphabot is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Alphabot is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Alphabot.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
@@ -9,18 +26,19 @@ public class Say extends Command {
     private PermissionManager manager;
     private Config config;
 
-    public Say(){
+    public Say() {
         super("Say", "Send a message to the current channel");
     }
+
     @Override
     public boolean execute(MessageEvent event) {
-      String[] args = event.getMessage().split(" ");
-      StringBuilder builder = new StringBuilder();
-      for(int i = 1; i < args.length; i++){
-          builder.append(args[i]).append(" ");
-      }
-      event.getChannel().send().message(builder.toString().trim());
-      return true;
+        String[] args = event.getMessage().split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 1; i < args.length; i++) {
+            builder.append(args[i]).append(" ");
+        }
+        event.getChannel().send().message(builder.toString().trim());
+        return true;
     }
 
     @Override

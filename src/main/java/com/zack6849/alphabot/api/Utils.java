@@ -1,3 +1,20 @@
+/*
+ *  This file is part of Alphabot.
+ *
+ *  Alphabot is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Alphabot is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Alphabot.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.zack6849.alphabot.api;
 
 import com.google.gson.JsonElement;
@@ -43,6 +60,10 @@ public class Utils {
         return highest;
     }
 
+    public static String munge(String word) {
+        return word.replace("a", "\u00E0").replace("A", "\u00C0").replace("E", "\u00C8").replace("e", "\u00EB").replace("i", "\u00EF").replace("I", "\u00cf").replace("o", "\u00f8").replace("O", "\u0150").replace("u", "\u00FC").replace("U", "\u01D9").replace("y", "\u0177").replace("Y", "\u0178");
+    }
+
     public static String getTitle(String link) {
         String response = "";
         try {
@@ -55,7 +76,7 @@ public class Utils {
             if (type.contains("text") || type.contains("application")) {
                 Document doc = Jsoup.connect(link).userAgent(USER_AGENT).followRedirects(true).get();
                 String title = doc.title() == null || doc.title().isEmpty() ? "No title found!" : doc.title();
-                info = String.format("%s - Content Type: %s Size: %skb", title, type, length);
+                info = String.format("%s - (Content Type: %s Size: %skb)", title, type, length);
                 return info;
             }
             info = String.format("Content Type: %s Size: %skb", type, length);
@@ -157,7 +178,11 @@ public class Utils {
             JsonElement jelement = new JsonParser().parse(json);
             JsonObject output = jelement.getAsJsonObject();
             output = output.getAsJsonObject("responseData").getAsJsonArray("results").get(0).getAsJsonObject();
-            String result = String.format("Google: %s | %s | (%s)", StringEscapeUtils.unescapeHtml4(output.get("titleNoFormatting").toString().replaceAll("\"", "")), StringEscapeUtils.unescapeHtml4(output.get("content").toString().replaceAll("\\s+", " ").replaceAll("\\<.*?>", "").replaceAll("\"", "")), output.get("url").toString().replaceAll("\"", ""));
+
+            String title = StringEscapeUtils.unescapeJava(StringEscapeUtils.unescapeHtml4(output.get("titleNoFormatting").toString().replaceAll("\"", "")));
+            String content = StringEscapeUtils.unescapeJava(StringEscapeUtils.unescapeHtml4(output.get("content").toString().replaceAll("\\s+", " ").replaceAll("\\<.*?>", "").replaceAll("\"", "")));
+            String url = StringEscapeUtils.unescapeJava(output.get("url").toString().replaceAll("\"", ""));
+            String result = String.format("Google: %s | %s | (%s)", title, content, url);
             if (result != null) {
                 return result;
             } else {

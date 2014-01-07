@@ -1,3 +1,21 @@
+/*
+ *  This file is part of Alphabot.
+ *
+ *  Alphabot is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Alphabot is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Alphabot.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 package com.zack6849.alphabot.listeners;
 
 import com.zack6849.alphabot.api.*;
@@ -6,7 +24,6 @@ import org.pircbotx.hooks.ListenerAdapter;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class MessageEvent extends ListenerAdapter {
@@ -30,7 +47,7 @@ public class MessageEvent extends ListenerAdapter {
                 if (commandfile.exists()) {
                     BufferedReader in = new BufferedReader(new FileReader(commandfile));
                     String tmp;
-                    while ((tmp = in.readLine()) != null){
+                    while ((tmp = in.readLine()) != null) {
                         event.getChannel().send().message(commandname + ": " + tmp);
                     }
                     in.close();
@@ -57,7 +74,7 @@ public class MessageEvent extends ListenerAdapter {
         }
         for (String word : event.getMessage().split(" ")) {
             if (Utils.isUrl(word)) {
-                event.getChannel().send().message(event.getUser().getNick() + "'s URL: " + Utils.getTitle(word));
+                event.getChannel().send().message(Utils.munge(event.getUser().getNick()) + "'s URL: " + Utils.getTitle(word));
             }
         }
     }

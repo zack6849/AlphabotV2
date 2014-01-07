@@ -1,3 +1,20 @@
+/*
+ *  This file is part of Alphabot.
+ *
+ *  Alphabot is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Alphabot is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Alphabot.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
@@ -26,11 +43,11 @@ public class Ban extends Command {
             User target = event.getBot().getUserChannelDao().getUser(args[2]);
             int senderrank = Utils.getRank(chan, sender);
             int targetrank = Utils.getRank(chan, target);
-            if(senderrank > targetrank){
+            if (senderrank > targetrank) {
                 chan.send().ban("*!*@" + target.getHostmask());
                 chan.send().kick(target);
                 return true;
-            }else{
+            } else {
                 sender.send().message("You cant kick someone with a higher rank than you!");
                 return false;
             }
@@ -40,11 +57,11 @@ public class Ban extends Command {
             int senderrank = Utils.getRank(event.getChannel(), event.getUser());
             User target = event.getBot().getUserChannelDao().getUser(args[1]);
             int targetrank = Utils.getRank(event.getChannel(), target);
-            if(senderrank > targetrank){
+            if (senderrank > targetrank) {
                 chan.send().ban("*!*@" + target.getHostmask());
                 chan.send().kick(target, "Ban requested by " + sender.getNick());
                 return true;
-            }else{
+            } else {
                 sender.send().message("You cant kick someone with a higher rank than you!");
                 return false;
             }

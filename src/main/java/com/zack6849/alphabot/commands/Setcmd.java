@@ -1,3 +1,20 @@
+/*
+ *  This file is part of Alphabot.
+ *
+ *  Alphabot is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Alphabot is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Alphabot.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
@@ -8,43 +25,36 @@ import org.pircbotx.hooks.events.MessageEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-
-/**
- * Created with IntelliJ IDEA.
- * User: Zack
- * Date: 11/24/13
- * Time: 3:43 AM
- * To change this template use File | Settings | File Templates.
- */
 public class Setcmd extends Command {
     private Config config;
     private PermissionManager manager;
-    public Setcmd(){
+
+    public Setcmd() {
         super("Setcmd", "Set a custom command", "setcmd <trigger> <output> ex $setcmd test this is a test!");
     }
 
     @Override
     public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
-        if(args.length > 1){
+        if (args.length > 1) {
             String commandname = args[1];
             StringBuilder sb = new StringBuilder();
-            for(int i = 2; i < args.length; i++){
+            for (int i = 2; i < args.length; i++) {
                 sb.append(args[i]).append(" ");
             }
-            try{
+            try {
                 File command = new File("commands/" + event.getChannel().getName() + "/" + commandname + ".cmd");
                 command.getParentFile().mkdirs();
                 command.createNewFile();
                 PrintWriter writer = new PrintWriter(new FileWriter(command));
-                for(String s : sb.toString().trim().split("\\\\n")){
+                for (String s : sb.toString().trim().split("\\\\n")) {
                     writer.println(s);
                 }
                 writer.flush();
                 writer.close();
                 return true;
-            }catch (Exception e){
-                 event.getChannel().send().message("An error occured!");
+            } catch (Exception e) {
+                event.getChannel().send().message("An error occured!");
             }
         }
         return false;
@@ -52,7 +62,7 @@ public class Setcmd extends Command {
 
     @Override
     public void setConfig(Config config) {
-      this.config = config;
+        this.config = config;
     }
 
     @Override
