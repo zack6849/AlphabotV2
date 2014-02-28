@@ -25,6 +25,7 @@ import org.pircbotx.hooks.events.MessageEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+
 public class Setcmd extends Command {
     private Config config;
     private PermissionManager manager;

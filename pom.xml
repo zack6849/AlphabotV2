@@ -3,21 +3,44 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zack6849</groupId>
-    <artifactId>Alphabotv2</artifactId>
+    <artifactId>AlphabotV2</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Alphabotv2</name>
-    <url>http://bots.zack6849.com/</url>
-
+    <name>AlphabotV2</name>
+    <url>http://zack6849.com/</url>
+    <licenses>
+        <license>
+            <name>GNU Public License, Version 3</name>
+            <url>http://www.gnu.org/licenses/gpl.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>releases</id>
+            <url>http://repo.ndev.me/content/groups/public</url>
+        </repository>
+    </repositories>
     <dependencies>
+        <dependency>
+            <groupId>com.notoriousdev</groupId>
+            <artifactId>yamlconfig</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.pircbotx</groupId>
             <artifactId>pircbotx</artifactId>
             <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.13</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -53,6 +76,21 @@
     </dependencies>
     <build>
         <defaultGoal>clean package</defaultGoal>
+        <directory>target</directory>
+        <outputDirectory>target/classes</outputDirectory>
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+
+        <finalName>${project.artifactId}</finalName>
+
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

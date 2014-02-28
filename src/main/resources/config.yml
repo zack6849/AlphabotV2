@@ -1,0 +1,46 @@
+#------------------------
+#  Bot Identity Settings
+#------------------------
+bot-nickname: AlphabotV2
+bot-username: AlphabotV2
+bot-ident: Alphabot
+bot-password: Password
+ctcp-finger-reply: wot.
+ctcp-version-reply: Alphabot v2.0
+
+
+#------------------------
+#  Bot behavior settings
+#------------------------
+bot-trigger: $
+permission-denied: I'm sorry %USERNAME%, I can't let you do that.
+bot-ops:
+  - 'zack6849*@*.zack6849.com'
+  - '*@192.95.15.190'
+auto-nickchange: true
+auto-reconnect: true
+auto-rejoin: true
+auto-accept-invite: true
+channels:
+  - '#zack6849'
+channels-log:
+ - '#zack6849'
+debug: true
+
+
+#----------------------
+# IRC Server Settings
+#----------------------
+server-hostname: irc.esper.net
+server-port: 6667
+use-ssl: true
+verify-ssl: true
+server-password:
+
+
+#------------------------------------------------------------------
+# This section controls the behavior of the chat socket listener.
+# Do not touch or enable unless you know what this does!
+#------------------------------------------------------------------
+enable-chat-socket: true
+chat-socket-port: 9001

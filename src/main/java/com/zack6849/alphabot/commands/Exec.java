@@ -40,11 +40,14 @@ public class Exec extends Command {
             interpreter.set("conf", config);
             interpreter.set("registry", new CommandRegistry());
             interpreter.set("manager", manager);
-            if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+            if (System.getProperty("os.name").toLowerCase().contains("linux") || System.getProperty("os.name").toLowerCase().contains("mac")) {
                 interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = java.lang.Runtime.getRuntime().exec(new java.lang.String[] {\"/bin/sh\", \"-c\", command}); java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
             } else {
-                // TODO : Make exec compatible with windows.
-                //interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = Runtime.getRuntime().exec(command}); BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
+                if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                    interpreter.eval("java.lang.String getStuff(java.lang.String command){java.lang.String output = \"\";java.lang.Process p = java.lang.Runtime.getRuntime().exec(command);java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){output += temp + \"\\t\";}return output;}");
+                } else {
+                    System.out.println("Unknown operating system detected, i have no idea how to make getStuff work here :D :D");
+                }
             }
         } catch (Exception ex) {
             Logger.getLogger(Exec.class.getName()).log(Level.SEVERE, null, ex);

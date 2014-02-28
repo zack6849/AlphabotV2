@@ -25,6 +25,8 @@ import org.pircbotx.hooks.ListenerAdapter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MessageEvent extends ListenerAdapter {
 
@@ -40,7 +42,6 @@ public class MessageEvent extends ListenerAdapter {
     public void onMessage(org.pircbotx.hooks.events.MessageEvent event) {
         String trigger = config.getTrigger();
         if (event.getMessage().startsWith(trigger)) {
-
             try {
                 String commandname = event.getMessage().split(" ")[0].substring(1).toLowerCase();
                 File commandfile = new File("commands/" + event.getChannel().getName() + "/" + commandname + ".cmd");
@@ -54,7 +55,7 @@ public class MessageEvent extends ListenerAdapter {
                 }
                 String classname = Character.toUpperCase(event.getMessage().split(" ")[0].charAt(1)) + event.getMessage().split(" ")[0].substring(2).toLowerCase();
                 String permission = "command." + classname.toLowerCase();
-                if (manager.hasPermission(permission, event.getUser())) {
+                if (manager.getUserGroup(event.getUser()).getPermissions().contains(permission)) {
                     Command command = CommandRegistry.getCommand(classname);
                     command.setConfig(config);
                     if (!command.execute(event)) {
@@ -68,8 +69,9 @@ public class MessageEvent extends ListenerAdapter {
                 /*
                  * Unknown command
                  * >implying i give a fuck
-                 * Logger.getLogger(MessageEvent.class.getName()).log(Level.SEVERE, null, e);
-                 */
+                 * */
+                Logger.getLogger(MessageEvent.class.getName()).log(Level.SEVERE, null, e);
+
             }
         }
         for (String word : event.getMessage().split(" ")) {

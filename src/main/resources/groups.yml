@@ -1,0 +1,33 @@
+groups:
+  Default:
+    permissions:
+    - command.help
+    - command.google
+    - command.mcstatus
+    - command.status
+    - command.uptime
+    exec: false
+  Moderator:
+    permissions:
+    - command.kick
+    - command.ban
+    - command.quiet
+    - command.part
+    - command.setcmd
+    - command.join
+    - command.unban
+    - command.voice
+    - command.say
+    - command.cycle
+    inheritance:
+    - Default
+    exec: false
+  Admin:
+    permissions:
+    - command.kill
+    - command.exec
+    inheritance:
+    - Moderator
+    exec: true
+users:
+  - "*@*.zack6849.com::Admin"
