@@ -1,10 +1,11 @@
 bot.properties
-permissions.properties
+permissions.json
 Alphabotv2.rar
 /target
 /build.xml
 /bin
 /manifest.mf
+/commands
 #netbeans stuff.
 /.idea
 Alphabotv2.iml
