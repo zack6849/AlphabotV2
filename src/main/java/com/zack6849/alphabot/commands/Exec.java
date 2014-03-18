@@ -39,7 +39,6 @@ public class Exec extends Command {
             interpreter.set("config", config);
             interpreter.set("conf", config);
             interpreter.set("registry", new CommandRegistry());
-            interpreter.set("manager", manager);
             if (System.getProperty("os.name").toLowerCase().contains("linux") || System.getProperty("os.name").toLowerCase().contains("mac")) {
                 interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = java.lang.Runtime.getRuntime().exec(new java.lang.String[] {\"/bin/sh\", \"-c\", command}); java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
             } else {
@@ -60,6 +59,7 @@ public class Exec extends Command {
 
     @Override
     public boolean execute(MessageEvent event) {
+
         String[] args = event.getMessage().split(" ");
         StringBuilder sb = new StringBuilder();
         if (args.length >= 2) {
@@ -73,6 +73,7 @@ public class Exec extends Command {
                 }
                 String command = sb.toString().trim();
                 interpreter.eval(command);
+
                 return true;
             } catch (EvalError ex) {
                 Logger.getLogger(Exec.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,6 +91,11 @@ public class Exec extends Command {
 
     @Override
     public void setManager(PermissionManager manager) {
+        try {
+            interpreter.set("manager", manager);
+        } catch (EvalError evalError) {
+            evalError.printStackTrace();
+        }
         this.manager = manager;
     }
 }

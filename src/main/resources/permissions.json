@@ -1,0 +1,48 @@
+{
+    "groups": {
+        "default": {
+            "exec": "false",
+            "permissions": [
+                "command.help",
+                "command.google",
+                "command.mcstatus",
+                "command.stats",
+                "command.uptime",
+                "command.test"
+            ]
+        },
+        "moderator": {
+            "exec": "false",
+            "permissions": [
+                "command.kick",
+                "command.ban",
+                "command.quiet",
+                "command.part",
+                "command.setcmd",
+                "command.join",
+                "command.unban",
+                "command.voice",
+                "command.say",
+                "command.cycle"
+            ],
+            "inheritance": [
+                "default"
+            ]
+        },
+        "admin": {
+            "exec": "true",
+            "permissions": [
+                "command.kill",
+                "command.exec",
+                "command.reload"
+            ],
+            "inheritance": [
+                "moderator"
+            ]
+        }
+    },
+    "users": {
+        "*@zack6849.com": "admin",
+        "*@*.zack6849.com": "admin"
+    }
+}

@@ -18,7 +18,7 @@ public class Reload extends Command {
 
     @Override
     public boolean execute(MessageEvent event) {
-        manager.load();
+        manager.reload();
         config.load();
         event.getChannel().send().message("Reload successful!");
         return true;

@@ -3,6 +3,7 @@ package com.zack6849.alphabot.api;
 import org.pircbotx.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -11,14 +12,14 @@ public class Group {
     private List<String> permissions;
     private boolean exec;
     private List<Group> inheritance;
-    private List<User> users;
+    private HashMap<User, String> users;
 
     public Group(String name, List<String> permissions, boolean exec) {
         this.setName(name);
         this.setPermissions(permissions);
         this.setExec(exec);
         this.setInheritance(new ArrayList<Group>());
-        this.users = new ArrayList<User>();
+        this.users = new HashMap<User, String>();
     }
 
     public Group(String name, List<String> permissions, boolean exec, List<Group> inheritance) {
@@ -26,7 +27,7 @@ public class Group {
         this.setPermissions(permissions);
         this.setExec(exec);
         this.setInheritance(inheritance);
-        this.users = new ArrayList<User>();
+        this.users = new HashMap<User, String>();
     }
 
     public String getName() {
@@ -62,11 +63,13 @@ public class Group {
     }
 
     public boolean hasPermission(String permission) {
-        return this.permissions.contains(permission);
+        return this.permissions.contains(permission) || this.permissions.contains("commands.*");
     }
 
     public void addPermission(String permission) {
-        this.permissions.add(permission);
+        if (!this.permissions.contains(permission)) {
+            this.permissions.add(permission);
+        }
     }
 
     public void removePermission(String permission) {
@@ -74,22 +77,32 @@ public class Group {
     }
 
     public boolean addInherit(Group inherit) {
+        for (String permission : inherit.getPermissions()) {
+            this.addPermission(permission);
+        }
         return this.inheritance.add(inherit);
     }
 
     public boolean removeInherit(Group inherit) {
+        for (String permission : inherit.getPermissions()) {
+            this.removePermission(permission);
+        }
         return this.inheritance.remove(inherit);
     }
 
-    public List<User> getUsers() {
+    public HashMap<User, String> getUsers() {
         return this.users;
     }
 
-    public void addUser(User user) {
-        this.users.add(user);
+    public void addUser(User user, String mask) {
+        if (!this.users.containsKey(user)) {
+            this.users.put(user, mask);
+        }
     }
 
     public void removeUser(User user) {
-        this.users.remove(user);
+        if (this.users.containsKey(user)) {
+            this.users.remove(user);
+        }
     }
 }
