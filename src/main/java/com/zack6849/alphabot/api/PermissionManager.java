@@ -33,7 +33,9 @@ import java.util.regex.Pattern;
 
 public class PermissionManager {
     private final List<Group> groups = new LinkedList<>();
+
     public void load() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             groups.clear();
             String json = Files.toString(new File("permissions.json"), Charset.isSupported("UTF-8") ? Charset.forName("UTF-8") : Charset.defaultCharset());
@@ -44,14 +46,16 @@ public class PermissionManager {
             Iterator it = set.iterator();
             while (it.hasNext()) {
                 Map.Entry en = (Map.Entry) it.next();
-                String name = en.getKey().toString().replaceAll("", "");
-                System.out.println("Found group " + name);
-                JsonObject value = (JsonObject) en.getValue();
-                boolean exec = value.get("exec").getAsBoolean();
-                JsonArray perms = value.get("permissions").getAsJsonArray();
-                List<String> permissions = new ArrayList<String>();
-                for (int i = 0; i < perms.size(); i++) {
-                    permissions.add(perms.get(i).getAsString());
+                JsonObject obj = new JsonParser().parse(en.getValue().toString()).getAsJsonObject();
+                String name = obj.get("name").toString().replaceAll("\"", "");
+                List<Permission> permissions = new ArrayList<Permission>();
+                List<String> inheiritance = new ArrayList<String>();
+                boolean exec = obj.get("exec").getAsBoolean();
+                for(JsonElement perm : obj.getAsJsonArray("permissions")){
+                    permissions.add(new Permission(perm.getAsString(), false));
+                }
+                for(JsonElement inheirit : obj.getAsJsonArray("inheritance")){
+                    inheiritance.add(inheirit.getAsString());
                 }
                 groups.add(new Group(name, permissions, exec));
                 for (Group g : groups) {
@@ -69,7 +73,6 @@ public class PermissionManager {
                     }
                 }
             }
-            System.out.println("Located " + groups.size() + " groups!");
         } catch (Exception ex) {
             Logger.getLogger(PermissionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,15 +80,22 @@ public class PermissionManager {
 
     /**
      * Gets a group by name, not case sensitive.
+     *
      * @param id the name of the group to get, ie. "admin"
      * @return the group object if we find it, otherwise null.
      */
     public Group getGroupByName(String id) {
         for (Group group : groups) {
+
             if (group.getName().equalsIgnoreCase(id)) {
                 return group;
             }
         }
+        System.out.println("Groups:");
+        for(Group g : groups){
+            System.out.println(" - " + g.getName());
+        }
+        System.out.println("Invalid group " + id + " requested!");
         return null;
     }
 
@@ -100,6 +110,7 @@ public class PermissionManager {
     /**
      * Returns the group a user belongs to, this ignores default
      * If a user belongs to two groups, then it will return the first it finds.
+     *
      * @param user the User object to get the group of
      * @return the Group the user belongs to
      */
@@ -109,6 +120,7 @@ public class PermissionManager {
             if (!g.getName().equalsIgnoreCase("default")) {
                 for (User u : g.getUsers().keySet()) {
                     if (u == user) {
+                        System.out.println("0 Found group " + g.getName() + " for user " + user.getNick());
                         return g;
                     }
                 }
@@ -125,7 +137,7 @@ public class PermissionManager {
             Iterator it = users.iterator();
             int count = 0;
             while (it.hasNext()) {
-                count ++;
+                count++;
                 Object next = it.next();
                 Map.Entry en = (Map.Entry) next;
                 String mask = en.getKey().toString().replaceAll("\"", "");
@@ -149,46 +161,62 @@ public class PermissionManager {
     }
 
     public void save() {
+        System.out.println("Saving....");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser parser = new JsonParser();
         String json = null;
         try {
             json = Files.toString(new File("permissions.json"), Charset.isSupported("UTF-8") ? Charset.forName("UTF-8") : Charset.defaultCharset());
-            JsonElement jelement = new JsonParser().parse(json);
+            JsonElement jelement = parser.parse(json);
             JsonObject output = jelement.getAsJsonObject();
-            //map to store users and ranks temporarily. <Hostmask, Group>
             HashMap<String, String> masks = new HashMap<String, String>();
-            //ignore the likley redundant commenting, i know im going to end uo needing them later.
             for (Group g : getGroups()) {
-                //for every group in the groups that isnt the default one
                 if (!g.getName().equalsIgnoreCase("default")) {
-                    // for every user in that group's users
                     for (User u : g.getUsers().keySet()) {
-                        //if we havent already added them to the masks, add them to it
-                        if(!masks.containsKey(u)){
+                        if (!masks.containsKey(g.getUsers().get(u))) {
                             masks.put(g.getUsers().get(u), g.getName());
                         }
                     }
                 }
             }
-            //get all the users from the json
             JsonElement obj = output.get("users");
             Set<Map.Entry<String, JsonElement>> users = output.get("users").getAsJsonObject().entrySet();
             Iterator it = users.iterator();
             while (it.hasNext()) {
-                Map.Entry entry  = (Map.Entry) it.next();
-                //the keys and values contain quotation marks, do not want.
+                Map.Entry entry = (Map.Entry) it.next();
                 masks.put(entry.getKey().toString().replaceAll("\"", ""), entry.getValue().toString().replaceAll("\"", ""));
             }
-            //just incase the mask has been updated or something, i dont fucking know.
-            for(String s : masks.keySet()){
+            for (String s : masks.keySet()) {
                 obj.getAsJsonObject().remove(s);
                 obj.getAsJsonObject().addProperty(s, masks.get(s));
             }
-            //delete the users object
+            JsonObject gr = output.get("groups").getAsJsonObject();
+            for (Group g : groups) {
+                gr.remove(g.getName());
+                System.out.println(g.getName() + ":");
+                //temporary group object to store the "new" group object
+                //loop through all permissions in the actual group, and if the permission is inherited, then remove it.
+                List<String> permissions = new ArrayList<String>();
+                Iterator<Permission> iter = g.getPermissions().iterator();
+                while(iter.hasNext()){
+                    Permission perm = iter.next();
+                    System.out.println("  - " + perm.getPermission() + ":" + perm.isInheirited());
+                    if(!perm.isInheirited()){
+                        permissions.add(perm.getPermission());
+                    }
+                }
+                JsonObject group = parser.parse(gson.toJson(g)).getAsJsonObject();
+                group.remove("permissions");
+                group.add("permissions", parser.parse(gson.toJson(permissions)));
+                group.remove("inheritance");
+                group.add("inheritance", parser.parse(gson.toJson(g.getInheritance())));
+                gr.add(g.getName(), group);
+            }
+            output.remove("groups");
+            output.add("groups", gr);
             output.remove("users");
-            //replace with our new and updated users object
             output.add("users", obj);
-            //this isnt really neccessary, but it makes the json pretty.
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            System.out.println(gson.toJson(output));
             Files.write(gson.toJson(output), new File("permissions.json"), Charset.isSupported("UTF-8") ? Charset.forName("UTF-8") : Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();

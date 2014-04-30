@@ -1,7 +1,8 @@
 {
     "groups": {
         "default": {
-            "exec": "false",
+            "name": "default",
+            "exec": false,
             "permissions": [
                 "command.help",
                 "command.google",
@@ -9,10 +10,12 @@
                 "command.stats",
                 "command.uptime",
                 "command.test"
-            ]
+            ],
+            "inheritance": []
         },
         "moderator": {
-            "exec": "false",
+            "name": "moderator",
+            "exec": false,
             "permissions": [
                 "command.kick",
                 "command.ban",
@@ -30,11 +33,13 @@
             ]
         },
         "admin": {
-            "exec": "true",
+            "name": "admin",
+            "exec": true,
             "permissions": [
                 "command.kill",
                 "command.exec",
-                "command.reload"
+                "command.reload",
+                "test.permissions"
             ],
             "inheritance": [
                 "moderator"

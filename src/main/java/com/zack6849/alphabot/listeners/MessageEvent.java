@@ -21,6 +21,7 @@ package com.zack6849.alphabot.listeners;
 import com.zack6849.alphabot.api.*;
 import org.pircbotx.Colors;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.events.UserModeEvent;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,7 +38,10 @@ public class MessageEvent extends ListenerAdapter {
         this.config = conf;
         this.manager = man;
     }
-
+    @Override
+    public void onUserMode(UserModeEvent event){
+        System.out.println("Usermode change on " + event.getUser().getNick() + " with mode " + event.getMode() + " Recepient " + event.getRecipient().getNick());
+    }
     @Override
     public void onMessage(org.pircbotx.hooks.events.MessageEvent event) {
         String trigger = config.getTrigger();
@@ -55,7 +59,7 @@ public class MessageEvent extends ListenerAdapter {
                 }
                 String classname = Character.toUpperCase(event.getMessage().split(" ")[0].charAt(1)) + event.getMessage().split(" ")[0].substring(2).toLowerCase();
                 String permission = "command." + classname.toLowerCase();
-                if (manager.getUserGroup(event.getUser()).getPermissions().contains(permission)) {
+                if (manager.getUserGroup(event.getUser()).hasPermission(new Permission(permission, false))) {
                     Command command = CommandRegistry.getCommand(classname);
                     command.setConfig(config);
                     command.setManager(manager);

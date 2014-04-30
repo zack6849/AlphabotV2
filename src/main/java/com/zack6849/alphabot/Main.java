@@ -18,10 +18,7 @@
 
 package com.zack6849.alphabot;
 
-import com.zack6849.alphabot.api.Command;
-import com.zack6849.alphabot.api.CommandRegistry;
-import com.zack6849.alphabot.api.Config;
-import com.zack6849.alphabot.api.PermissionManager;
+import com.zack6849.alphabot.api.*;
 import com.zack6849.runnables.ChatSocketListener;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
@@ -35,6 +32,7 @@ import java.util.logging.Logger;
 
 public class Main {
     public static long startup = 0;
+
     public static void main(String[] args) {
         System.setProperty(SimpleLogger.SHOW_DATE_TIME_KEY, "true");
         System.setProperty(SimpleLogger.DATE_TIME_FORMAT_KEY, "[HH:mm:ss]");
@@ -53,7 +51,7 @@ public class Main {
             Set<Class<? extends Command>> subTypes = reflections.getSubTypesOf(Command.class);
             for (Class c : subTypes) {
                 Command cmd = CommandRegistry.getCommand(c.getSimpleName());
-                //System.out.println("Registered command " + cmd.getName() + " as key " + c.getSimpleName());
+                System.out.println("Registered command " + cmd.getName() + " as key " + c.getSimpleName());
                 CommandRegistry.register(cmd);
             }
             //i have no idea what this is, but IDEA wouldn't shut the fuck up about changing it.
@@ -78,7 +76,6 @@ public class Main {
             }
             bot.startBot();
             System.out.println("Shutting down");
-
         } catch (Exception ex) {
             ex.printStackTrace();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
