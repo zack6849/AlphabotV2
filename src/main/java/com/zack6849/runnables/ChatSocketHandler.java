@@ -18,6 +18,7 @@
 
 package com.zack6849.runnables;
 
+import com.zack6849.alphabot.api.Config;
 import org.pircbotx.PircBotX;
 
 import java.io.BufferedReader;
@@ -31,10 +32,12 @@ public class ChatSocketHandler extends Thread {
     Socket socket;
     BufferedReader reader;
     BufferedWriter writer;
+    Config config;
 
-    public ChatSocketHandler(Socket socket, PircBotX bot) {
+    public ChatSocketHandler(Socket socket, PircBotX bot, Config config) {
         this.socket = socket;
         this.bot = bot;
+        this.config = config;
     }
 
     @Override
@@ -44,8 +47,12 @@ public class ChatSocketHandler extends Thread {
             this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             writer = new BufferedWriter(new PrintWriter(socket.getOutputStream()));
             String line;
+            boolean firstline = true;
             while ((line = reader.readLine()) != null) {
                 if (!line.isEmpty()) {
+                    // if(firstline && line.equalsIgnoreCase(config.)){
+
+                    // }
                     bot.sendRaw().rawLineNow(line);
                 } else {
                     writer.write("Invalid format!\r\n");

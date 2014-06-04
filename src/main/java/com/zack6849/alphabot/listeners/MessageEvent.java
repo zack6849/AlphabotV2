@@ -21,7 +21,6 @@ package com.zack6849.alphabot.listeners;
 import com.zack6849.alphabot.api.*;
 import org.pircbotx.Colors;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.UserModeEvent;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,10 +37,7 @@ public class MessageEvent extends ListenerAdapter {
         this.config = conf;
         this.manager = man;
     }
-    @Override
-    public void onUserMode(UserModeEvent event){
-        System.out.println("Usermode change on " + event.getUser().getNick() + " with mode " + event.getMode() + " Recepient " + event.getRecipient().getNick());
-    }
+
     @Override
     public void onMessage(org.pircbotx.hooks.events.MessageEvent event) {
         String trigger = config.getTrigger();

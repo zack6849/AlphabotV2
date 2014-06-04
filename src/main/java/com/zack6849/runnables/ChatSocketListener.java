@@ -18,27 +18,28 @@
 
 package com.zack6849.runnables;
 
+import com.zack6849.alphabot.api.Config;
 import org.pircbotx.PircBotX;
 
 import java.net.ServerSocket;
 
 public class ChatSocketListener extends Thread {
     private ServerSocket server;
-    private int port;
+    private Config config;
     private PircBotX bot;
 
-    public ChatSocketListener(PircBotX bot, int port) {
-        this.port = port;
+    public ChatSocketListener(PircBotX bot, Config config) {
+        this.config = config;
         this.bot = bot;
-        System.out.println("Starting chat socket listener on port " + port);
+        System.out.println("Starting chat socket listener on port " + config.getChatSocketPort());
     }
 
     public void run() {
         try {
-            this.server = new ServerSocket(port);
+            this.server = new ServerSocket(config.getChatSocketPort());
             System.out.println("Accepting connections!");
             while (true) {
-                new Thread(new ChatSocketHandler(server.accept(), bot)).start();
+                new Thread(new ChatSocketHandler(server.accept(), bot, config)).start();
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -44,6 +44,7 @@ public class Config {
     private String botPassword;
     private String ctcpFinger;
     private String ctcpVersion;
+    private String chatSocketPassword;
     private List<String> channels;
     private List<String> loggedChannels;
     private String permissionDenied;
@@ -264,5 +265,13 @@ public class Config {
 
     public void setChatSocketPort(int chatSocketPort) {
         this.chatSocketPort = chatSocketPort;
+    }
+
+    public String getChatSocketPassword() {
+        return chatSocketPassword;
+    }
+
+    public void setChatSocketPassword(String chatSocketPassword) {
+        this.chatSocketPassword = chatSocketPassword;
     }
 }

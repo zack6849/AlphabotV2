@@ -19,7 +19,10 @@
 
 package com.zack6849.alphabot.commands;
 
-import com.zack6849.alphabot.api.*;
+import com.zack6849.alphabot.api.Command;
+import com.zack6849.alphabot.api.Config;
+import com.zack6849.alphabot.api.Group;
+import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.events.MessageEvent;
 
 
@@ -35,14 +38,9 @@ public class Test extends Command {
     @Override
     public boolean execute(MessageEvent event) {
         event.getChannel().send().message("Test!");
-        event.getChannel().send().message(event.getUser().getUserLevels(event.getChannel()).toString());
-        event.getChannel().send().message(manager.getUserGroup(event.getUser()).getName());
+        event.getChannel().send().message("User Level : " + event.getUser().getUserLevels(event.getChannel()).toString());
+        event.getChannel().send().message("Group: " + manager.getUserGroup(event.getUser()).getName());
         Group g = manager.getUserGroup(event.getUser());
-        event.getUser().send().notice("Can exec? " + g.hasExec());
-        event.getUser().send().notice("Permissions: ");
-        for (Permission perm : g.getPermissions()) {
-            event.getUser().send().notice(" - " + perm.getPermission());
-        }
         return true;
     }
 

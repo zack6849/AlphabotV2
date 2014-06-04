@@ -30,12 +30,12 @@ public class Group {
     private String name;
     private List<Permission> permissions;
     private boolean exec;
-    //please for the love of god do **NOT** make these non-static, it will fuck up your day.
+    //apparently transient works better, and it doesn't need to be static anyways.
     private List<String> inheritance;
     @Expose(serialize = false)
-    private static HashMap<User, String> users;
+    private transient HashMap<User, String> users;
     @Expose(serialize = false)
-    private static PermissionManager manager;
+    private transient PermissionManager manager;
 
     public Group(String name, List<Permission> permissions, boolean exec) {
         manager = new PermissionManager();
@@ -88,11 +88,11 @@ public class Group {
     }
 
     public boolean hasPermission(Permission permission) {
-        for(Permission perm : permissions){
-            if(perm.getPermission().equalsIgnoreCase(permission.getPermission())){
+        for (Permission perm : permissions) {
+            if (perm.getPermission().equalsIgnoreCase(permission.getPermission())) {
                 return true;
             }
-            if(perm.getPermission().equalsIgnoreCase("commands.*")){
+            if (perm.getPermission().equalsIgnoreCase("commands.*")) {
                 return true;
             }
         }
@@ -101,19 +101,19 @@ public class Group {
 
     public void addPermission(Permission permission) {
         boolean found = false;
-        for(Permission perm : permissions){
-            if(perm.getPermission().equals(permission.getPermission())){
-               found = true;
+        for (Permission perm : permissions) {
+            if (perm.getPermission().equals(permission.getPermission())) {
+                found = true;
             }
         }
-        if(!found){
+        if (!found) {
             permissions.add(permission);
         }
     }
 
     public void removePermission(String permission) {
-        for(Permission perm : permissions){
-            if(perm.getPermission().equalsIgnoreCase(permission)){
+        for (Permission perm : permissions) {
+            if (perm.getPermission().equalsIgnoreCase(permission)) {
                 this.permissions.remove(perm);
                 return;
             }

@@ -38,10 +38,16 @@ public class Help extends Command {
     public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         if (args.length == 1) {
+            String header = String.format("| %s| %s| %s|", StringUtils.rightPad("Command Name", 15), StringUtils.rightPad("Description", 50), StringUtils.rightPad("Help", 50));
+            String seperator = "+" + StringUtils.repeat('-', 16) + "+" + StringUtils.repeat('-', 51) + "+" + StringUtils.repeat('-', 51) + "+";
+            System.out.println(seperator);
+            System.out.println(header);
+            System.out.println(seperator);
             for (String s : CommandRegistry.commands.keySet()) {
                 Command command = CommandRegistry.getCommand(s);
-                event.getUser().send().notice(String.format("%s - %s", command.getName(), command.getDescription()));
+                System.out.println(String.format("| %s| %s| %s|", StringUtils.rightPad(command.getName(), 15), StringUtils.rightPad(command.getDescription(), 50), StringUtils.rightPad(command.getDescription(), 50)));
             }
+            System.out.println(seperator);
             return true;
         }
         if (args.length == 2) {

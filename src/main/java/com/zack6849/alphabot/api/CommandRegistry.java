@@ -38,13 +38,13 @@ public class CommandRegistry {
     public static Command getCommand(String name) {
         if (commands.containsKey(name)) {
             return commands.get(name);
-        } else {
-            try {
-                commands.put(name, (Command) Command.class.getClassLoader().loadClass("com.zack6849.alphabot.commands." + name).newInstance());
-                return commands.get(name);
-            } catch (Exception ex) {
-                //Logger.getLogger(CommandRegistry.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }
+        //i don't need an else statement, it returns. i'm dumb.
+        try {
+            commands.put(name, (Command) Command.class.getClassLoader().loadClass("com.zack6849.alphabot.commands." + name).newInstance());
+            return commands.get(name);
+        } catch (Exception ex) {
+            //Logger.getLogger(CommandRegistry.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

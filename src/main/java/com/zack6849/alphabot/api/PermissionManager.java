@@ -49,14 +49,14 @@ public class PermissionManager {
                 JsonObject obj = new JsonParser().parse(en.getValue().toString()).getAsJsonObject();
                 String name = obj.get("name").toString().replaceAll("\"", "");
                 List<Permission> permissions = new ArrayList<Permission>();
-                List<String> inheiritance = new ArrayList<String>();
+                //List<String> inheiritance = new ArrayList<String>();
                 boolean exec = obj.get("exec").getAsBoolean();
-                for(JsonElement perm : obj.getAsJsonArray("permissions")){
+                for (JsonElement perm : obj.getAsJsonArray("permissions")) {
                     permissions.add(new Permission(perm.getAsString(), false));
                 }
-                for(JsonElement inheirit : obj.getAsJsonArray("inheritance")){
+                /*for(JsonElement inheirit : obj.getAsJsonArray("inheritance")){
                     inheiritance.add(inheirit.getAsString());
-                }
+                } */
                 groups.add(new Group(name, permissions, exec));
                 for (Group g : groups) {
                     JsonObject gr = output.get("groups").getAsJsonObject().get(g.getName()).getAsJsonObject();
@@ -91,10 +91,6 @@ public class PermissionManager {
                 return group;
             }
         }
-        System.out.println("Groups:");
-        for(Group g : groups){
-            System.out.println(" - " + g.getName());
-        }
         System.out.println("Invalid group " + id + " requested!");
         return null;
     }
@@ -120,7 +116,6 @@ public class PermissionManager {
             if (!g.getName().equalsIgnoreCase("default")) {
                 for (User u : g.getUsers().keySet()) {
                     if (u == user) {
-                        System.out.println("0 Found group " + g.getName() + " for user " + user.getNick());
                         return g;
                     }
                 }
@@ -193,15 +188,13 @@ public class PermissionManager {
             JsonObject gr = output.get("groups").getAsJsonObject();
             for (Group g : groups) {
                 gr.remove(g.getName());
-                System.out.println(g.getName() + ":");
                 //temporary group object to store the "new" group object
                 //loop through all permissions in the actual group, and if the permission is inherited, then remove it.
                 List<String> permissions = new ArrayList<String>();
                 Iterator<Permission> iter = g.getPermissions().iterator();
-                while(iter.hasNext()){
+                while (iter.hasNext()) {
                     Permission perm = iter.next();
-                    System.out.println("  - " + perm.getPermission() + ":" + perm.isInheirited());
-                    if(!perm.isInheirited()){
+                    if (!perm.isInheirited()) {
                         permissions.add(perm.getPermission());
                     }
                 }
@@ -216,8 +209,8 @@ public class PermissionManager {
             output.add("groups", gr);
             output.remove("users");
             output.add("users", obj);
-            System.out.println(gson.toJson(output));
             Files.write(gson.toJson(output), new File("permissions.json"), Charset.isSupported("UTF-8") ? Charset.forName("UTF-8") : Charset.defaultCharset());
+            System.out.println("6");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -229,5 +222,6 @@ public class PermissionManager {
     public void reload() {
         save();
         load();
+        System.out.println("[PermissionsManager] Reload Complete!");
     }
 }

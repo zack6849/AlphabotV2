@@ -8,10 +8,10 @@ public class Permission {
     private boolean inheirited;
 
     /**
-     * @param permission the permission node to store
+     * @param permission  the permission node to store
      * @param isInherited if the permission node is inherited from another group, then this needs to be true.
      */
-    public Permission(String permission, boolean isInherited){
+    public Permission(String permission, boolean isInherited) {
         this.setPermission(permission);
         this.setInheirited(isInherited);
     }
