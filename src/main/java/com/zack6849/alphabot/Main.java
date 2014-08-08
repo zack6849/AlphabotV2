@@ -54,6 +54,8 @@ public class Main {
             Set<Class<? extends Command>> subTypes = reflections.getSubTypesOf(Command.class);
             for (Class c : subTypes) {
                 Command cmd = CommandRegistry.getCommand(c.getSimpleName());
+                cmd.setManager(manager);
+                cmd.setConfig(config);
                 CommandRegistry.register(cmd);
             }
             //i have no idea what this is, but IDEA wouldn't shut the fuck up about changing it.
@@ -65,6 +67,8 @@ public class Main {
             builder.setEncoding(Charset.isSupported("UTF-8") ? Charset.forName("UTF-8") : Charset.defaultCharset());
             builder.setNickservPassword(config.getBotPassword());
             builder.setVersion("Alphbot v2.0 BETA");
+            builder.setAutoNickChange(config.isAutoNickChange());
+            builder.setAutoReconnect(config.isAutoReconnectServer());
             builder.setServer(config.getServerHostame(), Integer.parseInt(config.getServerPort()), config.getServerPassword());
             builder.getListenerManager().addListener(new com.zack6849.alphabot.listeners.MessageEvent(config, manager));
             builder.getListenerManager().addListener(new com.zack6849.alphabot.listeners.InviteEvent(config, manager));
@@ -78,6 +82,7 @@ public class Main {
             }
             bot.startBot();
             System.out.println("Shutting down");
+            System.exit(0);
         } catch (Exception ex) {
             ex.printStackTrace();
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

@@ -25,8 +25,8 @@ import org.pircbotx.Channel;
 import org.pircbotx.hooks.events.MessageEvent;
 
 public class Cycle extends Command {
-    private static Config config;
-    private static PermissionManager manager;
+    private Config config;
+    private PermissionManager manager;
 
     public Cycle() {
         super("Cycle", "tells the bot to part and re-join the channel", "part #channel or part");

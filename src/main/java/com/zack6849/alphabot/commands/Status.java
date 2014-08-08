@@ -18,6 +18,7 @@
 
 package com.zack6849.alphabot.commands;
 
+import com.zack6849.alphabot.Main;
 import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.Config;
 import com.zack6849.alphabot.api.PermissionManager;
@@ -35,8 +36,15 @@ public class Status extends Command {
         Runtime runtime = Runtime.getRuntime();
         long totalmemory = runtime.totalMemory();
         long usedmemory = runtime.freeMemory();
-        String stats = String.format("%s/%s megabytes used.", (totalmemory - usedmemory) / 1048576, totalmemory / 1048576);
-        event.getChannel().send().message(stats);
+        String stats = String.format("%s/%s megabytes used, with %s processors availible, and %s running threads", (totalmemory - usedmemory) / 1048576, totalmemory / 1048576, runtime.availableProcessors(), Thread.activeCount());
+        Long time = System.currentTimeMillis() - Main.startup;
+        int seconds = (int) (time / 1000) % 60;
+        int minutes = (int) (time / (60000)) % 60;
+        int hours = (int) (time / (3600000)) % 24;
+        int days = (int) (time / 86400000);
+        String uptime = String.format("%d Days %d Hours %d Minutes and %d seconds", days, hours, minutes, seconds);
+        event.getChannel().send().message("Current bot uptime: " + uptime);
+        event.getChannel().send().message("JVM Information: " + stats);
         return true;
     }
 

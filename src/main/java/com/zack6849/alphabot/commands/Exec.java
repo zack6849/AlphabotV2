@@ -27,8 +27,6 @@ import java.util.logging.Logger;
 
 public class Exec extends Command {
 
-    private static Config config;
-    private static PermissionManager manager;
     private static bsh.Interpreter interpreter;
 
     static {
@@ -37,8 +35,6 @@ public class Exec extends Command {
             interpreter.getNameSpace().doSuperImport();
             interpreter.set("utils", new Utils());
             interpreter.set("Utils", interpreter.get("utils"));
-            interpreter.set("config", config);
-            interpreter.set("conf", config);
             interpreter.set("registry", new CommandRegistry());
             if (System.getProperty("os.name").toLowerCase().contains("linux") || System.getProperty("os.name").toLowerCase().contains("mac")) {
                 interpreter.eval("java.lang.String getStuff(java.lang.String command){ java.lang.String output = \"\";java.lang.Process p = java.lang.Runtime.getRuntime().exec(new java.lang.String[] {\"/bin/sh\", \"-c\", command}); java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));java.lang.String temp = \"\";while((temp = in.readLine()) != null){ output += temp + \"\\t\"; } return output; }");
@@ -53,6 +49,9 @@ public class Exec extends Command {
             Logger.getLogger(Exec.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    private Config config;
+    private PermissionManager manager;
 
     public Exec() {
         super("Exec", "Execute java code at runtime", "Exec <code> ex. exec bot.sendMessage(chan, \"Hello world!\");");
@@ -69,6 +68,9 @@ public class Exec extends Command {
                     interpreter.set("bot", event.getBot());
                     interpreter.set("chan", event.getChannel());
                     interpreter.set("user", event.getUser());
+                    interpreter.set("config", config);
+                    interpreter.set("conf", config);
+                    interpreter.set("manager", manager);
                     for (int i = 1; i < args.length; i++) {
                         sb.append(args[i]).append(" ");
                     }
@@ -88,15 +90,21 @@ public class Exec extends Command {
     @Override
     public void setConfig(Config config) {
         this.config = config;
+        try {
+            interpreter.set("config", config);
+            interpreter.set("conf", config);
+        } catch (EvalError error) {
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void setManager(PermissionManager manager) {
+        this.manager = manager;
         try {
             interpreter.set("manager", manager);
         } catch (EvalError evalError) {
             evalError.printStackTrace();
         }
-        this.manager = manager;
     }
 }

@@ -19,6 +19,7 @@
 package com.zack6849.alphabot.listeners;
 
 import com.zack6849.alphabot.api.*;
+import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.Colors;
 import org.pircbotx.hooks.ListenerAdapter;
 
@@ -43,7 +44,7 @@ public class MessageEvent extends ListenerAdapter {
         String trigger = config.getTrigger();
         if (event.getMessage().startsWith(trigger)) {
             try {
-                String commandname = event.getMessage().split(" ")[0].substring(1).toLowerCase();
+                String commandname = event.getMessage().split(" ")[0].substring(config.getTrigger().length()).toLowerCase();
                 File commandfile = new File("commands/" + event.getChannel().getName() + "/" + commandname + ".cmd");
                 if (commandfile.exists()) {
                     BufferedReader in = new BufferedReader(new FileReader(commandfile));
@@ -53,12 +54,10 @@ public class MessageEvent extends ListenerAdapter {
                     }
                     in.close();
                 }
-                String classname = Character.toUpperCase(event.getMessage().split(" ")[0].charAt(1)) + event.getMessage().split(" ")[0].substring(2).toLowerCase();
+                String classname = StringUtils.capitalize(event.getMessage().split(" ")[0].substring(config.getTrigger().length()));
                 String permission = "command." + classname.toLowerCase();
                 if (manager.getUserGroup(event.getUser()).hasPermission(new Permission(permission, false))) {
                     Command command = CommandRegistry.getCommand(classname);
-                    command.setConfig(config);
-                    command.setManager(manager);
                     if (!command.execute(event)) {
                         event.getChannel().send().message(Colors.RED + "An error occurred! " + command.getHelp());
                         return;
