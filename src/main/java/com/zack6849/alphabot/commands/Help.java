@@ -20,7 +20,7 @@ package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
 import com.zack6849.alphabot.api.CommandRegistry;
-import com.zack6849.alphabot.api.Config;
+import com.zack6849.alphabot.api.BotConfiguration;
 import com.zack6849.alphabot.api.PermissionManager;
 import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -28,7 +28,7 @@ import org.pircbotx.hooks.events.MessageEvent;
 public class Help extends Command {
 
     private PermissionManager manager;
-    private Config config;
+    private BotConfiguration config;
 
     public Help() {
         super("Help", "List command names and how to use them.", "help or help <command>");
@@ -38,14 +38,14 @@ public class Help extends Command {
     public boolean execute(MessageEvent event) {
         String[] args = event.getMessage().split(" ");
         if (args.length == 1) {
-            String header = String.format("| %s| %s| %s|", StringUtils.rightPad("Command Name", 15), StringUtils.rightPad("Description", 50), StringUtils.rightPad("Help", 50));
-            String seperator = "+" + StringUtils.repeat('-', 16) + "+" + StringUtils.repeat('-', 51) + "+" + StringUtils.repeat('-', 51) + "+";
+            String header = String.format("| %s| %s| %s|", StringUtils.rightPad("Command Name", 15), StringUtils.rightPad("Description", 50), StringUtils.rightPad("Help", 65));
+            String seperator = "+" + StringUtils.repeat('-', 16) + "+" + StringUtils.repeat('-', 51) + "+" + StringUtils.repeat('-', 66) + "+";
             event.getUser().send().notice(seperator);
             event.getUser().send().notice(header);
             event.getUser().send().notice(seperator);
             for (String s : CommandRegistry.commands.keySet()) {
                 Command command = CommandRegistry.getCommand(s);
-                event.getUser().send().notice(String.format("| %s| %s| %s|", StringUtils.rightPad(command.getName(), 15), StringUtils.rightPad(command.getDescription(), 50), StringUtils.rightPad(command.getHelp(), 50)));
+                event.getUser().send().notice(String.format("| %s| %s| %s|", StringUtils.rightPad(command.getName(), 15), StringUtils.rightPad(command.getDescription(), 50), StringUtils.rightPad(command.getHelp(), 65)));
             }
             event.getUser().send().notice(seperator);
             return true;
@@ -63,7 +63,7 @@ public class Help extends Command {
     }
 
     @Override
-    public void setConfig(Config config) {
+    public void setConfig(BotConfiguration config) {
         this.config = config;
     }
 

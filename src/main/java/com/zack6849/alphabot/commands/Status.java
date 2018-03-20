@@ -20,11 +20,11 @@ package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.Main;
 import com.zack6849.alphabot.api.Command;
-import com.zack6849.alphabot.api.Config;
+import com.zack6849.alphabot.api.BotConfiguration;
 import com.zack6849.alphabot.api.PermissionManager;
 
 public class Status extends Command {
-    private Config config;
+    private BotConfiguration config;
     private PermissionManager manager;
 
     public Status() {
@@ -50,7 +50,7 @@ public class Status extends Command {
 
 
     @Override
-    public void setConfig(Config config) {
+    public void setConfig(BotConfiguration config) {
         this.config = config;
     }
 

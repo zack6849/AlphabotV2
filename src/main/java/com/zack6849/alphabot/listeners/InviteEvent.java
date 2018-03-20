@@ -18,16 +18,16 @@
 
 package com.zack6849.alphabot.listeners;
 
-import com.zack6849.alphabot.api.Config;
+import com.zack6849.alphabot.api.BotConfiguration;
 import com.zack6849.alphabot.api.PermissionManager;
 import org.pircbotx.hooks.ListenerAdapter;
 
 public class InviteEvent extends ListenerAdapter {
 
-    private Config config;
+    private BotConfiguration config;
     private PermissionManager manager;
 
-    public InviteEvent(Config conf, PermissionManager man) {
+    public InviteEvent(BotConfiguration conf, PermissionManager man) {
         this.config = conf;
         this.manager = man;
     }

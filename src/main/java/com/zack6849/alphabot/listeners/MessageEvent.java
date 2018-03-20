@@ -26,15 +26,16 @@ import org.pircbotx.hooks.ListenerAdapter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.management.BufferPoolMXBean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MessageEvent extends ListenerAdapter {
 
-    private Config config;
+    private BotConfiguration config;
     private PermissionManager manager;
 
-    public MessageEvent(Config conf, PermissionManager man) {
+    public MessageEvent(BotConfiguration conf, PermissionManager man) {
         this.config = conf;
         this.manager = man;
     }
@@ -58,9 +59,11 @@ public class MessageEvent extends ListenerAdapter {
                 String permission = "command." + classname.toLowerCase();
                 if (manager.getUserGroup(event.getUser()).hasPermission(new Permission(permission, false))) {
                     Command command = CommandRegistry.getCommand(classname);
-                    if (!command.execute(event)) {
-                        event.getChannel().send().message(Colors.RED + "An error occurred! " + command.getHelp());
-                        return;
+                    if(command != null){
+                        if (!command.execute(event)) {
+                            event.getChannel().send().message(Colors.RED + "An error occurred! " + command.getHelp());
+                            return;
+                        }
                     }
                 } else {
                     event.getUser().send().notice(config.getPermissionDenied().replaceAll("%USERNAME%", event.getUser().getNick()));
@@ -71,7 +74,6 @@ public class MessageEvent extends ListenerAdapter {
                  * >implying i give a fuck
                  * */
                 Logger.getLogger(MessageEvent.class.getName()).log(Level.SEVERE, null, e);
-
             }
         }
         for (String word : event.getMessage().split(" ")) {

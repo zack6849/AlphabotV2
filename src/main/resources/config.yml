@@ -13,7 +13,7 @@ ctcp-version-reply: Alphabot v2.0
 #  Bot behavior settings
 #------------------------
 bot-trigger: $
-permission-denied: I'm sorry %USERNAME%, I can't let you do that. ( \u0361\u00B0 \u035C\u0296 \u0361\u00B0)\u200E
+permission-denied: I'm sorry %USERNAME%, I can't let you do that.
 bot-ops:
   - 'zack6849*@*.zack6849.com'
   - '*@192.95.15.190'

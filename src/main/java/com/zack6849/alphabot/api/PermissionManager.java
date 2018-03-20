@@ -20,25 +20,41 @@ package com.zack6849.alphabot.api;
 
 import com.google.common.io.Files;
 import com.google.gson.*;
+import com.zack6849.alphabot.Main;
 import org.pircbotx.User;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class PermissionManager {
     private final List<Group> groups = new LinkedList<>();
 
     public void load() {
+        File f = new File("permissions.json");
+        if(!f.exists()){
+            try {
+                System.out.println("[!!] No configuration file found! generating a new one!");
+                BufferedReader s = new BufferedReader(new InputStreamReader(Main.class.getResourceAsStream("/permissions.json")));
+                java.nio.file.Files.write(f.toPath(), s.lines().collect(Collectors.toList()));
+                System.out.println("[!!] Done!");
+            } catch (IOException e) {
+                System.out.println("[!!] Failed to create config file: ");
+                e.printStackTrace();
+            }
+        }
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             groups.clear();
-            String json = Files.toString(new File("permissions.json"), Charset.isSupported("UTF-8") ? Charset.forName("UTF-8") : Charset.defaultCharset());
+            String json = Files.toString(f, Charset.isSupported("UTF-8") ? Charset.forName("UTF-8") : Charset.defaultCharset());
             JsonElement jelement = new JsonParser().parse(json);
             JsonObject output = jelement.getAsJsonObject();
             JsonObject group = output.get("groups").getAsJsonObject();

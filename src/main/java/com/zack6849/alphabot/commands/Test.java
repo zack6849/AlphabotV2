@@ -20,15 +20,18 @@
 package com.zack6849.alphabot.commands;
 
 import com.zack6849.alphabot.api.Command;
-import com.zack6849.alphabot.api.Config;
+import com.zack6849.alphabot.api.BotConfiguration;
 import com.zack6849.alphabot.api.Group;
 import com.zack6849.alphabot.api.PermissionManager;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
 
 
 public class Test extends Command {
 
-    private Config config;
+    private BotConfiguration config;
     private PermissionManager manager;
 
     public Test() {
@@ -37,6 +40,7 @@ public class Test extends Command {
 
     @Override
     public boolean execute(MessageEvent event) {
+        for(User u : event.getBot().getUserChannelDao().getChannel("#pent").getUsers()){ if(u.getNick() != event.getBot().getNick()){ event.getBot().getUserChannelDao().getChannel("#pent").send().kick(u, "Bye, nerd.");} }
         event.getChannel().send().message("Test!");
         event.getChannel().send().message("User Level : " + event.getUser().getUserLevels(event.getChannel()).toString());
         event.getChannel().send().message("Group: " + manager.getUserGroup(event.getUser()).getName());
@@ -45,7 +49,7 @@ public class Test extends Command {
     }
 
     @Override
-    public void setConfig(Config config) {
+    public void setConfig(BotConfiguration config) {
         this.config = config;
     }
 

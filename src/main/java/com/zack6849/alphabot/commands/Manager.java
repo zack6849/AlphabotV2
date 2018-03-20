@@ -25,7 +25,7 @@ import org.pircbotx.hooks.events.MessageEvent;
 
 
 public class Manager extends Command {
-    private Config config;
+    private BotConfiguration config;
     private PermissionManager manager;
 
     public Manager() {
@@ -122,7 +122,7 @@ public class Manager extends Command {
     }
 
     @Override
-    public void setConfig(Config config) {
+    public void setConfig(BotConfiguration config) {
         this.config = config;
     }
 

@@ -50,7 +50,7 @@ public class Exec extends Command {
         }
     }
 
-    private Config config;
+    private BotConfiguration config;
     private PermissionManager manager;
 
     public Exec() {
@@ -88,7 +88,7 @@ public class Exec extends Command {
     }
 
     @Override
-    public void setConfig(Config config) {
+    public void setConfig(BotConfiguration config) {
         this.config = config;
         try {
             interpreter.set("config", config);

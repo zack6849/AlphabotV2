@@ -102,7 +102,7 @@ public abstract class Command {
      *
      * @param config the config object to pass
      */
-    public abstract void setConfig(Config config);
+    public abstract void setConfig(BotConfiguration config);
 
     /**
      * Set the PermissionManager object for the command
